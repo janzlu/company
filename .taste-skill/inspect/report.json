@@ -1,0 +1,1769 @@
+{
+ "url": "http://127.0.0.1:4321/nexus-ai-website/index.html",
+ "at": "2026-10-26T23:03:12.861Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 6,
+   "filled": [
+    0.47,
+    0.44,
+    0.95,
+    0.58,
+    0.38,
+    0.21
+   ],
+   "motion": {
+    "elements": 35,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 35,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 4885,
+     "screens": 5.4,
+     "words": 201,
+     "img": 6,
+     "video": 0,
+     "canvas": 0,
+     "svg": 1,
+     "sections": 7,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 12,
+     "uiAbuse": false,
+     "realPictures": 3,
+     "videoCount": 0,
+     "uiPictures": 3,
+     "pictureSamples": [
+      "workshop-lathe-machine.jpg",
+      "precision-engineering-metrology-of-small-holes-5",
+      "lathe-boring.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "让大模型能力普惠百业 打通实体生产最后一公里",
+     "words": 2,
+     "chars": 22,
+     "lines": 2,
+     "size": 52,
+     "vw": 3.6,
+     "font": "Switzer",
+     "weight": 600,
+     "tracking": -0.025,
+     "leading": 1.2,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "center",
+     "position": "center",
+     "widthRatio": 0.39,
+     "top": 130,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "让大模型能力普惠百业 打通实体生产最后一公里",
+     "words": 2,
+     "lines": 2,
+     "size": 52,
+     "font": "Switzer"
+    },
+    "headings": [
+     {
+      "text": "让大模型能力普惠百业 打通实体生产最后一公里",
+      "words": 2,
+      "chars": 22,
+      "lines": 2,
+      "size": 52,
+      "vw": 3.6,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.025,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.39,
+      "top": 130,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "从十年车间生产现场 与进销存底层架构沉淀，到自研工业大模型 智能体，深度重构实体制造排产 与一人公司协同。",
+      "words": 4,
+      "chars": 53,
+      "lines": 3,
+      "size": 32,
+      "vw": 2.2,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.02,
+      "leading": 1.4,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.6,
+      "top": 1064,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "制造执行与资源排产器",
+      "words": 1,
+      "chars": 10,
+      "lines": 1,
+      "size": 32,
+      "vw": 2.2,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.02,
+      "leading": 1.6,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.95,
+      "top": 1862,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "首步 穿透业务骨架",
+      "words": 2,
+      "chars": 9,
+      "lines": 1,
+      "size": 32,
+      "vw": 2.2,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.02,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.4,
+      "top": 2879,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "实业信赖与产研共建",
+      "words": 1,
+      "chars": 9,
+      "lines": 1,
+      "size": 32,
+      "vw": 2.2,
+      "font": "Switzer",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.38,
+      "top": 3445,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "预约现场诊断与方案定制",
+      "words": 1,
+      "chars": 11,
+      "lines": 1,
+      "size": 32,
+      "vw": 2.2,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.6,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.36,
+      "top": 4188,
+      "tag": "span",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 6,
+     "maxLines": 3,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 4,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Switzer",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      14,
+      16,
+      20,
+      32,
+      52
+     ],
+     "sizeCount": 5,
+     "notLoaded": [],
+     "body": null,
+     "measureChars": null,
+     "max": {
+      "size": 52,
+      "vw": 3.6,
+      "font": "Switzer",
+      "text": "让大模型能力普惠百业打通实体生产最后一公里"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.11,
+     "centerShare": 0.22,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0a0d14",
+     "bodyBgHsl": {
+      "h": 222,
+      "s": 0.33,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#0a0d14",
+       "top": 944,
+       "hsl": {
+        "h": 222,
+        "s": 0.33,
+        "l": 0.06
+       }
+      },
+      {
+       "color": "#131824",
+       "top": 1742,
+       "hsl": {
+        "h": 222,
+        "s": 0.31,
+        "l": 0.11
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#8891a1",
+       "share": 0.49
+      },
+      {
+       "color": "#e9edf3",
+       "share": 0.43
+      },
+      {
+       "color": "#0a0d14",
+       "share": 0.05
+      },
+      {
+       "color": "#5a9bfc",
+       "share": 0.04
+      }
+     ],
+     "button": {
+      "bg": "#5a9bfc",
+      "hsl": {
+       "h": 216,
+       "s": 0.96,
+       "l": 0.67
+      },
+      "fg": "#0a0d14"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 3,
+     "inHero": 3,
+     "radius": 6,
+     "height": 42,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "业务沙盒与定制 ↗",
+      "切换模式",
+      "执行智能排产仿真"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 6,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 1,
+     "roundedBoxes": 24,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 3,
+     "mediaRadius": 8,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 3,
+       "iconTopped": false,
+       "rounded": true,
+       "top": 1318
+      }
+     ]
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 8,
+     "fixed": true,
+     "height": 72,
+     "floatingPill": false,
+     "blur": true
+    },
+    "fontsLoaded": [
+     "switzer"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 4885,
+    "margins": {
+     "left": 113,
+     "right": 128
+    },
+    "sections": [
+     {
+      "sel": "section#hero.hero-section",
+      "tag": "section",
+      "top": 0,
+      "height": 944,
+      "words": 41,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "让大模型能力普惠百业",
+       "size": 52,
+       "tag": "h1"
+      },
+      "left": 262,
+      "right": 287,
+      "textLeft": 262,
+      "textRight": 287,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#statement.section-statement",
+      "tag": "section",
+      "top": 944,
+      "height": 374,
+      "words": 4,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "从十年车间生产现场",
+       "size": 32,
+       "tag": "p"
+      },
+      "left": 290,
+      "right": 305,
+      "textLeft": 290,
+      "textRight": 305,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.section-gallery",
+      "tag": "section",
+      "top": 1318,
+      "height": 424,
+      "words": 6,
+      "media": 3,
+      "middle": 20,
+      "heading": null,
+      "left": 113,
+      "right": 128,
+      "textLeft": 133,
+      "textRight": 312,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#features.section-features",
+      "tag": "section",
+      "top": 1742,
+      "height": 967,
+      "words": 50,
+      "media": 0,
+      "middle": 94,
+      "heading": {
+       "text": "制造执行与资源排产器",
+       "size": 32,
+       "tag": "h2"
+      },
+      "left": 113,
+      "right": 128,
+      "textLeft": 122,
+      "textRight": 146,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#stages.section-stages",
+      "tag": "section",
+      "top": 2709,
+      "height": 588,
+      "words": 22,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "首步 穿透业务骨架",
+       "size": 32,
+       "tag": "h2"
+      },
+      "left": 113,
+      "right": 128,
+      "textLeft": 113,
+      "textRight": 155,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#proof.section-proof",
+      "tag": "section",
+      "top": 3297,
+      "height": 694,
+      "words": 22,
+      "media": 0,
+      "middle": 103,
+      "heading": {
+       "text": "实业信赖与产研共建",
+       "size": 32,
+       "tag": "h2"
+      },
+      "left": 137,
+      "right": 155,
+      "textLeft": 137,
+      "textRight": 155,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#contact.section-contact",
+      "tag": "section",
+      "top": 3992,
+      "height": 689,
+      "words": 14,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "预约现场诊断与方案定制",
+       "size": 32,
+       "tag": "span"
+      },
+      "left": 453,
+      "right": 468,
+      "textLeft": 477,
+      "textRight": 492,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.section-footer",
+      "tag": "footer",
+      "top": 4681,
+      "height": 205,
+      "words": 30,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 113,
+      "right": 128,
+      "textLeft": 113,
+      "textRight": 128,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [
+     {
+      "top": 2548,
+      "height": 272
+     },
+     {
+      "top": 3828,
+      "height": 324
+     }
+    ],
+    "h1s": [
+     {
+      "text": "让大模型能力普惠百业 打通实体生产最后一公里",
+      "size": 52,
+      "top": 130,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 1001,
+      "n": 3
+     },
+     {
+      "x": 113,
+      "n": 1
+     },
+     {
+      "x": 137,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 5,
+    "bodySize": 20,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0.14,
+    "voidBox": {
+     "x": 0,
+     "y": 120,
+     "w": 240,
+     "h": 780
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 7,
+   "filled": [
+    0.72,
+    0.74,
+    0.84,
+    0.72,
+    0.43,
+    0.34,
+    0.33
+   ],
+   "motion": {
+    "elements": 35,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 35,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 6832,
+     "screens": 6.7,
+     "words": 193,
+     "img": 6,
+     "video": 0,
+     "canvas": 0,
+     "svg": 1,
+     "sections": 7,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 12,
+     "uiAbuse": false,
+     "realPictures": 3,
+     "videoCount": 0,
+     "uiPictures": 3,
+     "pictureSamples": [
+      "workshop-lathe-machine.jpg",
+      "precision-engineering-metrology-of-small-holes-5",
+      "lathe-boring.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "让大模型能力普惠百业 打通实体生产最后一公里",
+     "words": 2,
+     "chars": 22,
+     "lines": 2,
+     "size": 32,
+     "vw": 4.2,
+     "font": "Switzer",
+     "weight": 600,
+     "tracking": -0.025,
+     "leading": 1.2,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "center",
+     "position": "center",
+     "widthRatio": 0.45,
+     "top": 97,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "让大模型能力普惠百业 打通实体生产最后一公里",
+     "words": 2,
+     "lines": 2,
+     "size": 32,
+     "font": "Switzer"
+    },
+    "headings": [
+     {
+      "text": "让大模型能力普惠百业 打通实体生产最后一公里",
+      "words": 2,
+      "chars": 22,
+      "lines": 2,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.025,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.45,
+      "top": 97,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "制造执行与资源排产器",
+      "words": 1,
+      "chars": 10,
+      "lines": 1,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.02,
+      "leading": 1.6,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.94,
+      "top": 2224,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "首步 穿透业务骨架",
+      "words": 2,
+      "chars": 9,
+      "lines": 1,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.02,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.94,
+      "top": 3713,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "实业信赖与产研共建",
+      "words": 1,
+      "chars": 9,
+      "lines": 1,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Switzer",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 4454,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "预约现场诊断与方案定制",
+      "words": 1,
+      "chars": 11,
+      "lines": 1,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.6,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.68,
+      "top": 6091,
+      "tag": "span",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 5,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 3,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Switzer",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      14,
+      16,
+      18,
+      20,
+      32
+     ],
+     "sizeCount": 5,
+     "notLoaded": [],
+     "body": null,
+     "measureChars": null,
+     "max": {
+      "size": 32,
+      "vw": 4.2,
+      "font": "Switzer",
+      "text": "让大模型能力普惠百业打通实体生产最后一公里"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.1,
+     "centerShare": 0.2,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0a0d14",
+     "bodyBgHsl": {
+      "h": 222,
+      "s": 0.33,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#131824",
+       "top": 400,
+       "hsl": {
+        "h": 222,
+        "s": 0.31,
+        "l": 0.11
+       }
+      },
+      {
+       "color": "#0a0d14",
+       "top": 1208,
+       "hsl": {
+        "h": 222,
+        "s": 0.33,
+        "l": 0.06
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#8891a1",
+       "share": 0.48
+      },
+      {
+       "color": "#e9edf3",
+       "share": 0.43
+      },
+      {
+       "color": "#0a0d14",
+       "share": 0.05
+      },
+      {
+       "color": "#5a9bfc",
+       "share": 0.04
+      }
+     ],
+     "button": {
+      "bg": "#5a9bfc",
+      "hsl": {
+       "h": 216,
+       "s": 0.96,
+       "l": 0.67
+      },
+      "fg": "#0a0d14"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 3,
+     "inHero": 3,
+     "radius": 6,
+     "height": 38,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "业务沙盒与定制 ↗",
+      "切换模式",
+      "执行智能排产仿真"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 6,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 1,
+     "roundedBoxes": 24,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 3,
+     "mediaRadius": 8,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 2,
+     "fixed": true,
+     "height": 60,
+     "floatingPill": false,
+     "blur": true
+    },
+    "fontsLoaded": [
+     "switzer"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 6832,
+    "margins": {
+     "left": 16,
+     "right": 31
+    },
+    "sections": [
+     {
+      "sel": "section#hero.hero-section",
+      "tag": "section",
+      "top": 0,
+      "height": 1024,
+      "words": 41,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "让大模型能力普惠百业",
+       "size": 32,
+       "tag": "h1"
+      },
+      "left": 35,
+      "right": 50,
+      "textLeft": 35,
+      "textRight": 60,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#statement.section-statement",
+      "tag": "section",
+      "top": 1024,
+      "height": 184,
+      "words": 4,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 16,
+      "right": 48,
+      "textLeft": 16,
+      "textRight": 48,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.section-gallery",
+      "tag": "section",
+      "top": 1208,
+      "height": 952,
+      "words": 6,
+      "media": 3,
+      "middle": 0,
+      "heading": null,
+      "left": 16,
+      "right": 31,
+      "textLeft": 36,
+      "textRight": 522,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#features.section-features",
+      "tag": "section",
+      "top": 2160,
+      "height": 1489,
+      "words": 50,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "制造执行与资源排产器",
+       "size": 32,
+       "tag": "h2"
+      },
+      "left": 16,
+      "right": 31,
+      "textLeft": 24,
+      "textRight": 85,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#stages.section-stages",
+      "tag": "section",
+      "top": 3649,
+      "height": 706,
+      "words": 22,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "首步 穿透业务骨架",
+       "size": 32,
+       "tag": "h2"
+      },
+      "left": 16,
+      "right": 31,
+      "textLeft": 16,
+      "textRight": 58,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#proof.section-proof",
+      "tag": "section",
+      "top": 4355,
+      "height": 1636,
+      "words": 22,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "实业信赖与产研共建",
+       "size": 32,
+       "tag": "h2"
+      },
+      "left": 40,
+      "right": 159,
+      "textLeft": 40,
+      "textRight": 159,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#contact.section-contact",
+      "tag": "section",
+      "top": 5991,
+      "height": 537,
+      "words": 14,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "预约现场诊断与方案定制",
+       "size": 32,
+       "tag": "span"
+      },
+      "left": 117,
+      "right": 132,
+      "textLeft": 141,
+      "textRight": 156,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.section-footer",
+      "tag": "footer",
+      "top": 6528,
+      "height": 304,
+      "words": 30,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 32,
+      "right": 61,
+      "textLeft": 32,
+      "textRight": 61,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "让大模型能力普惠百业 打通实体生产最后一公里",
+      "size": 32,
+      "top": 97,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 16,
+      "n": 7
+     },
+     {
+      "x": 40,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 8,
+    "bodySize": 18,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 9,
+   "filled": [
+    0.61,
+    0.62,
+    0.75,
+    0.89,
+    0.76,
+    0.77,
+    0.49,
+    0.35,
+    0.49
+   ],
+   "motion": {
+    "elements": 35,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 35,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 7290,
+     "screens": 8.6,
+     "words": 193,
+     "img": 6,
+     "video": 0,
+     "canvas": 0,
+     "svg": 1,
+     "sections": 7,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 12,
+     "uiAbuse": false,
+     "realPictures": 3,
+     "videoCount": 0,
+     "uiPictures": 3,
+     "pictureSamples": [
+      "workshop-lathe-machine.jpg",
+      "precision-engineering-metrology-of-small-holes-5",
+      "lathe-boring.jpg"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "让大模型能力普惠百业 打通实体生产最后一公里",
+     "words": 2,
+     "chars": 22,
+     "lines": 2,
+     "size": 32,
+     "vw": 8.2,
+     "font": "Switzer",
+     "weight": 600,
+     "tracking": -0.025,
+     "leading": 1.2,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "center",
+     "position": "center",
+     "widthRatio": 0.88,
+     "top": 96,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "让大模型能力普惠百业 打通实体生产最后一公里",
+     "words": 2,
+     "lines": 2,
+     "size": 32,
+     "font": "Switzer"
+    },
+    "headings": [
+     {
+      "text": "让大模型能力普惠百业 打通实体生产最后一公里",
+      "words": 2,
+      "chars": 22,
+      "lines": 2,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.025,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 96,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "制造执行与资源排产器",
+      "words": 1,
+      "chars": 10,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.02,
+      "leading": 1.6,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 2511,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "首步 穿透业务骨架",
+      "words": 2,
+      "chars": 9,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": -0.02,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 4042,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "实业信赖与产研共建",
+      "words": 1,
+      "chars": 9,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Switzer",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.79,
+      "top": 4830,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "预约现场诊断与方案定制",
+      "words": 1,
+      "chars": 11,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Switzer",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.6,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 6485,
+      "tag": "span",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 5,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 3,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Switzer",
+       "share": 1,
+       "mono": false
+      }
+     ],
+     "familyCount": 1,
+     "sizes": [
+      14,
+      16,
+      18,
+      20,
+      32
+     ],
+     "sizeCount": 5,
+     "notLoaded": [],
+     "body": null,
+     "measureChars": null,
+     "max": {
+      "size": 32,
+      "vw": 8.2,
+      "font": "Switzer",
+      "text": "让大模型能力普惠百业打通实体生产最后一公里"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.1,
+     "centerShare": 0.2,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#0a0d14",
+     "bodyBgHsl": {
+      "h": 222,
+      "s": 0.33,
+      "l": 0.06
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#131824",
+       "top": 610,
+       "hsl": {
+        "h": 222,
+        "s": 0.31,
+        "l": 0.11
+       }
+      },
+      {
+       "color": "#0a0d14",
+       "top": 1495,
+       "hsl": {
+        "h": 222,
+        "s": 0.33,
+        "l": 0.06
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#8891a1",
+       "share": 0.48
+      },
+      {
+       "color": "#e9edf3",
+       "share": 0.43
+      },
+      {
+       "color": "#0a0d14",
+       "share": 0.05
+      },
+      {
+       "color": "#5a9bfc",
+       "share": 0.04
+      }
+     ],
+     "button": {
+      "bg": "#5a9bfc",
+      "hsl": {
+       "h": 216,
+       "s": 0.96,
+       "l": 0.67
+      },
+      "fg": "#0a0d14"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 3,
+     "inHero": 2,
+     "radius": 6,
+     "height": 38,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "业务沙盒与定制 ↗",
+      "切换模式"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 6,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 0,
+     "hairlineSamples": [],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 1,
+     "roundedBoxes": 24,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 3,
+     "mediaRadius": 8,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 2,
+     "fixed": true,
+     "height": 60,
+     "floatingPill": false,
+     "blur": true
+    },
+    "fontsLoaded": [
+     "switzer"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 7290,
+    "margins": {
+     "left": 16,
+     "right": 16
+    },
+    "sections": [
+     {
+      "sel": "section#hero.hero-section",
+      "tag": "section",
+      "top": 0,
+      "height": 1255,
+      "words": 41,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "让大模型能力普惠百业",
+       "size": 32,
+       "tag": "h1"
+      },
+      "left": 21,
+      "right": 21,
+      "textLeft": 21,
+      "textRight": 21,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#statement.section-statement",
+      "tag": "section",
+      "top": 1255,
+      "height": 240,
+      "words": 4,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 16,
+      "right": 22,
+      "textLeft": 16,
+      "textRight": 22,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.section-gallery",
+      "tag": "section",
+      "top": 1495,
+      "height": 952,
+      "words": 6,
+      "media": 3,
+      "middle": 0,
+      "heading": null,
+      "left": 16,
+      "right": 16,
+      "textLeft": 36,
+      "textRight": 144,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#features.section-features",
+      "tag": "section",
+      "top": 2447,
+      "height": 1531,
+      "words": 50,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "制造执行与资源排产器",
+       "size": 32,
+       "tag": "h2"
+      },
+      "left": 16,
+      "right": 16,
+      "textLeft": 24,
+      "textRight": 38,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#stages.section-stages",
+      "tag": "section",
+      "top": 3978,
+      "height": 761,
+      "words": 22,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "首步 穿透业务骨架",
+       "size": 32,
+       "tag": "h2"
+      },
+      "left": 16,
+      "right": 16,
+      "textLeft": 16,
+      "textRight": 26,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#proof.section-proof",
+      "tag": "section",
+      "top": 4738,
+      "height": 1646,
+      "words": 22,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "实业信赖与产研共建",
+       "size": 32,
+       "tag": "h2"
+      },
+      "left": 40,
+      "right": 56,
+      "textLeft": 40,
+      "textRight": 56,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#contact.section-contact",
+      "tag": "section",
+      "top": 6385,
+      "height": 537,
+      "words": 14,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "预约现场诊断与方案定制",
+       "size": 32,
+       "tag": "span"
+      },
+      "left": 16,
+      "right": 16,
+      "textLeft": 19,
+      "textRight": 19,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.section-footer",
+      "tag": "footer",
+      "top": 6922,
+      "height": 369,
+      "words": 30,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 32,
+      "right": 47,
+      "textLeft": 32,
+      "textRight": 47,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "让大模型能力普惠百业 打通实体生产最后一公里",
+      "size": 32,
+      "top": 96,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 16,
+      "n": 7
+     },
+     {
+      "x": 40,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 8,
+    "bodySize": 18,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "no-footage",
+   "width": 1440,
+   "message": "No video anywhere on the page.",
+   "fix": "Look for one honest clip with scripts/assets.mjs --video (the place, the material, the process) and use it as a muted loop with a poster frame. Defend its absence only if no clip fits the subject."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "/Users/mon3xey/projects/company/.taste-skill/inspect/desktop-fold.jpg",
+   "pages": [
+    "/Users/mon3xey/projects/company/.taste-skill/inspect/desktop-page-01.jpg",
+    "/Users/mon3xey/projects/company/.taste-skill/inspect/desktop-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "/Users/mon3xey/projects/company/.taste-skill/inspect/tablet-fold.jpg",
+   "pages": [
+    "/Users/mon3xey/projects/company/.taste-skill/inspect/tablet-page-01.jpg",
+    "/Users/mon3xey/projects/company/.taste-skill/inspect/tablet-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "/Users/mon3xey/projects/company/.taste-skill/inspect/mobile-fold.jpg",
+   "pages": [
+    "/Users/mon3xey/projects/company/.taste-skill/inspect/mobile-page-01.jpg",
+    "/Users/mon3xey/projects/company/.taste-skill/inspect/mobile-page-02.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

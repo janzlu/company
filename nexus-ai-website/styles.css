@@ -1,0 +1,135 @@
+@import url("../shared/industrial-magazine.css");
+
+/* ==========================================================================
+   YIRAN NEXUS · BRAND FLAGSHIP ISSUE
+   Issue-specific typography, astrolabe geometry and hero composition.
+   ========================================================================== */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 72% -8%, rgba(176, 140, 92, 0.07), transparent 52%),
+    radial-gradient(ellipse at 0% 100%, rgba(159, 216, 255, 0.03), transparent 48%);
+}
+
+main, .site-foot { position: relative; z-index: 1; }
+
+.brand { position: relative; }
+.brand-cn::after {
+  content: "";
+  display: inline-block;
+  width: 3px;
+  height: 3px;
+  margin-left: 9px;
+  background: var(--bronze);
+  vertical-align: 0.5em;
+}
+
+.hero-copy { position: relative; z-index: 1; }
+.hero-lead { max-width: 44ch; }
+.hero-title em { position: relative; }
+.hero-title em::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.06em;
+  height: 1px;
+  background: var(--bronze-dim);
+}
+
+/* ------------------------------------------------------------ astrolabe */
+.hero-art {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  justify-self: end;
+  align-self: center;
+  padding: 8px 0 0;
+}
+.astrolabe { width: 100%; height: auto; overflow: visible; }
+.astrolabe text {
+  font-family: var(--mono);
+  font-size: 7.5px;
+  letter-spacing: 0.14em;
+  fill: var(--ink-3);
+}
+.astrolabe .art-dim { fill: var(--ink-3); font-size: 6.5px; letter-spacing: 0.1em; }
+.astrolabe .draw { stroke-width: 1; stroke-dasharray: 1; stroke-dashoffset: 1; animation: drawPath 2.8s var(--ease) 0.35s forwards; }
+.astrolabe .draw-late { animation-delay: 1.15s; }
+.dial { transform-origin: 280px 280px; animation: dialSpin 200s linear infinite; }
+.dial-reverse { transform-origin: 280px 280px; animation: dialSpin 140s linear infinite reverse; }
+.focal circle:first-child { transform-box: fill-box; transform-origin: center; animation: focalPulse 3.8s ease-in-out infinite; }
+.focal-b circle:first-child { animation-delay: 0.9s; }
+.focal-c circle:first-child { animation-delay: 1.7s; }
+.art-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--hairline-soft);
+  font-size: 7.5px;
+  letter-spacing: 0.12em;
+  color: var(--ink-3);
+}
+
+@keyframes dialSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes drawPath {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes focalPulse {
+  0%, 100% { opacity: 0.45; transform: scale(0.82); }
+  50% { opacity: 1; transform: scale(1.18); }
+}
+
+/* ---------------------------------------------------------- issue detail */
+.mag-quote { text-wrap: balance; }
+.pole-strip .pole-labels span:last-child, .pole-note span:last-child { text-align: right; }
+.pole-note span:nth-child(2) { flex: 1; text-align: center; }
+.species-def { text-wrap: pretty; }
+.chronicle-row .phase-line > span:not(.current-tag) { color: var(--ink-3); }
+.chronicle-row.is-current .chronicle-title { color: var(--blend, var(--ink)); }
+.invest-col p { text-wrap: pretty; }
+.contact-cell a { transition: color 0.3s ease; }
+.contact-cell a:hover { color: var(--bronze); }
+.dossier-cell .copy {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  color: var(--ink-3);
+  border: 1px solid var(--hairline);
+  padding: 4px 7px;
+  margin-top: 8px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+.dossier-cell .copy:hover { color: var(--bronze); border-color: var(--bronze-dim); }
+.dossier-cell .mono { font-family: var(--mono); font-size: 9px; color: var(--ink-3); }
+[id] { scroll-margin-top: calc(var(--head-h) + 24px); }
+
+@media (max-width: 1100px) {
+  .hero-art { max-width: 430px; }
+}
+@media (max-width: 900px) {
+  .hero-art { display: none; }
+  .hero { min-height: auto; padding-bottom: 36px; }
+  .hero-frame { inset: calc(var(--head-h) + 10px) var(--pad-x) 10px; }
+  .pole-note { flex-direction: column; gap: 5px; }
+  .pole-note span:nth-child(2) { text-align: left; }
+  .pole-note span:last-child { text-align: left; }
+}
+@media (max-width: 700px) {
+  .hero-title { font-size: clamp(2rem, 9.5vw, 3rem); }
+  .case-stats { gap: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dial, .dial-reverse, .focal circle:first-child { animation: none !important; }
+  .astrolabe .draw { stroke-dashoffset: 0 !important; animation: none !important; }
+}
