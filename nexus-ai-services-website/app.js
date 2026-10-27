@@ -8,12 +8,9 @@
   var prefersReduced = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false;
 
   function escapeHtml(value) {
+    if (window.NexusUI && typeof window.NexusUI.escapeHtml === 'function') return window.NexusUI.escapeHtml(value);
     return String(value == null ? '' : value)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
 
   function stripTags(value) {
@@ -22,6 +19,33 @@
 
   function formatNumber(value) {
     return String(Math.round(Number(value) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
+  function startClock() {
+    var el = document.getElementById('live-clock');
+    if (!el) return;
+    var formatter = null;
+    try {
+      formatter = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Asia/Shanghai',
+        hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+      });
+    } catch (err) { formatter = null; }
+    var tick = function () {
+      var now = new Date();
+      var text;
+      if (formatter) {
+        text = formatter.format(now);
+      } else {
+        var shifted = new Date(now.getTime() + (now.getTimezoneOffset() + 480) * 60000);
+        text = [shifted.getHours(), shifted.getMinutes(), shifted.getSeconds()].map(function (n) {
+          return String(n).padStart(2, '0');
+        }).join(':');
+      }
+      el.textContent = 'UTC+8 ' + text;
+    };
+    tick();
+    window.setInterval(tick, 1000);
   }
 
   /* ------------------------------------------------------------ live log */
@@ -368,7 +392,13 @@
       if (resetBtn) {
         event.preventDefault();
         resetConsultForm();
+        return;
       }
+
+      var zoomClose = target.closest('.image-zoom-overlay');
+      if (zoomClose) { event.preventDefault(); closeImageZoom(); return; }
+      var fig = target.closest('figure.engine-figure, figure.band');
+      if (fig && !activeZoomFig && !fig.closest('.toggle-panel')) { event.preventDefault(); openImageZoom(fig); return; }
     });
 
     document.addEventListener('input', function (event) {
@@ -382,13 +412,106 @@
     document.addEventListener('submit', function (event) {
       if (event.target && event.target.id === 'consult-form') submitConsultForm(event);
     });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && activeZoomFig) { event.preventDefault(); event.stopPropagation(); closeImageZoom(); }
+    });
+  }
+
+  var activeZoomFig = null, zoomOverlay = null;
+
+  function ensureZoomOverlay() {
+    if (zoomOverlay) return zoomOverlay;
+    zoomOverlay = document.createElement('div');
+    zoomOverlay.className = 'image-zoom-overlay';
+    zoomOverlay.setAttribute('role', 'dialog'); zoomOverlay.setAttribute('aria-modal', 'true'); zoomOverlay.setAttribute('aria-label', '大图预览');
+    zoomOverlay.innerHTML = '<div class="image-zoom-backdrop"></div><div class="image-zoom-view"><img class="image-zoom-img" alt=""><div class="image-zoom-caption"></div></div><button type="button" class="image-zoom-close" aria-label="关闭预览" title="关闭 (Esc)">✕</button>';
+    document.body.appendChild(zoomOverlay);
+    zoomOverlay.addEventListener('click', function (e) { e.preventDefault(); closeImageZoom(); });
+    return zoomOverlay;
+  }
+
+  function openImageZoom(fig) {
+    if (activeZoomFig) return false;
+    var img = fig.querySelector('img');
+    if (!img) return false;
+    var ov = ensureZoomOverlay(), view = ov.querySelector('.image-zoom-view');
+    var zoomImg = ov.querySelector('.image-zoom-img'), cap = ov.querySelector('.image-zoom-caption');
+    var figcaption = fig.querySelector('figcaption');
+    activeZoomFig = fig;
+    var s = img.currentSrc || img.src;
+    zoomImg.src = s; zoomImg.setAttribute('src', s); zoomImg.alt = img.alt || '';
+    if (cap) { cap.innerHTML = figcaption ? figcaption.innerHTML : ''; cap.style.display = figcaption ? 'flex' : 'none'; }
+    var rect = img.getBoundingClientRect();
+    var vw = window.innerWidth || 1280, vh = window.innerHeight || 720;
+    var padX = vw > 900 ? 56 : 20, padY = vh > 700 ? 64 : 32, capH = figcaption ? 40 : 0;
+    var maxW = Math.min(vw - padX * 2, 1440), maxH = vh - padY * 2 - capH;
+    var rectW = rect.width || 800, rectH = rect.height || 450, aspect = rectW / rectH;
+    var targetW = maxW, targetH = targetW / aspect;
+    if (targetH > maxH) { targetH = maxH; targetW = targetH * aspect; }
+    var targetLeft = Math.round((vw - targetW) / 2), targetTop = Math.max(padY, Math.round((vh - targetH - capH) / 2));
+    var scaleX = rectW / targetW, scaleY = rectH / targetH;
+    var deltaX = Math.round(rect.left - targetLeft), deltaY = Math.round(rect.top - targetTop);
+    view.style.left = targetLeft + 'px'; view.style.top = targetTop + 'px';
+    view.style.width = Math.round(targetW) + 'px'; view.style.height = Math.round(targetH) + 'px';
+    view.style.transformOrigin = '0 0';
+    view.style.transform = 'translate3d(' + deltaX + 'px, ' + deltaY + 'px, 0) scale(' + scaleX + ', ' + scaleY + ')';
+    view.style.transition = 'none';
+    fig.classList.add('is-zoomed-origin'); ov.classList.add('is-active');
+    document.body.style.overflow = 'hidden';
+    void view.offsetHeight;
+    var reduced = Boolean(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    if (!reduced) view.style.transition = 'transform 0.42s cubic-bezier(0.16, 1, 0.3, 1)';
+    view.style.transform = 'translate3d(0, 0, 0) scale(1, 1)';
+    setTimeout(function () {
+      var btn = ov.querySelector('.image-zoom-close');
+      if (btn) try { btn.focus({ preventScroll: true }); } catch (err) {}
+    }, reduced ? 20 : 430);
+    return true;
+  }
+
+  function closeImageZoom() {
+    if (!activeZoomFig || !zoomOverlay) return false;
+    var fig = activeZoomFig, img = fig.querySelector('img'), view = zoomOverlay.querySelector('.image-zoom-view');
+    var rect = img ? img.getBoundingClientRect() : { left: 0, top: 0, width: 800, height: 450 };
+    var targetLeft = parseFloat(view.style.left) || 0, targetTop = parseFloat(view.style.top) || 0;
+    var targetW = parseFloat(view.style.width) || (rect.width || 800), targetH = parseFloat(view.style.height) || (rect.height || 450);
+    var rectW = rect.width || targetW, rectH = rect.height || targetH;
+    var scaleX = rectW / targetW, scaleY = rectH / targetH;
+    var deltaX = Math.round(rect.left - targetLeft), deltaY = Math.round(rect.top - targetTop);
+    var reduced = Boolean(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    if (!reduced) view.style.transition = 'transform 0.36s cubic-bezier(0.16, 1, 0.3, 1)';
+    view.style.transform = 'translate3d(' + deltaX + 'px, ' + deltaY + 'px, 0) scale(' + scaleX + ', ' + scaleY + ')';
+    zoomOverlay.classList.remove('is-active');
+    fig.classList.remove('is-zoomed-origin');
+    document.body.style.overflow = '';
+    activeZoomFig = null;
+    setTimeout(function () {
+      view.style.transition = 'none'; view.style.transform = '';
+      try { fig.focus({ preventScroll: true }); } catch (err) {}
+    }, reduced ? 20 : 380);
+    return true;
+  }
+
+  function setupFigures() {
+    var figs = document.querySelectorAll('figure.engine-figure, figure.band');
+    Array.prototype.forEach.call(figs, function (fig) {
+      if (!fig.getAttribute('tabindex')) fig.setAttribute('tabindex', '0');
+      if (!fig.getAttribute('role')) fig.setAttribute('role', 'button');
+      if (!fig.getAttribute('aria-label')) {
+        var cap = fig.querySelector('figcaption');
+        fig.setAttribute('aria-label', '点击全屏查看大图：' + (cap ? cap.textContent.trim() : '大图'));
+      }
+    });
   }
 
   function init() {
+    startClock();
     runErpDemo(0);
     runSoloDemo(0);
     calculateROI();
     startLiveLog();
+    setupFigures();
     initDelegation();
   }
 

@@ -21,8 +21,15 @@
     return '<div class="dossier-actions">' + links.map(function (link) {
       return link.href
         ? '<a class="btn btn-line" href="' + link.href + '">' + link.label + '</a>'
-        : '<button type="button" class="btn btn-line" data-dossier="' + link.dossier + '" aria-haspopup="dialog">' + link.label + '</button>';
+        : '<button type="button" class="btn btn-line" data-toggle="' + link.dossier + '" data-dossier="' + link.dossier + '" aria-expanded="false" aria-controls="panel-' + link.dossier + '">' + link.label + '</button>';
     }).join('') + '</div>';
+  }
+
+  function timeline(rows) {
+    return '<table class="dossier-table"><thead><tr><th>时间</th><th>接入前 · Before</th><th>智枢 AI 接管后 · After</th></tr></thead><tbody>' +
+      rows.map(function (row) {
+        return '<tr><td>' + row[0] + '</td><td class="before">' + row[1] + '</td><td class="after">' + row[2] + '</td></tr>';
+      }).join('') + '</tbody></table>';
   }
 
   var registry = {
@@ -151,6 +158,51 @@
       }
     },
 
+    'doc-story': {
+      code: 'DOC-STORY // A REAL DAY',
+      category: '独立补充叙事 · 24H Contrast',
+      title: '老张与小李的 24 小时全流程对比实录',
+      subtitle: 'Two Lives, One Last-Mile Bridge · 00:00 — 24:00',
+      render: function () {
+        return '' +
+          '<p class="dossier-lead">这不是演示视频里的 AI，而是两位真实客户会经历的一天。一位是宁波非标五金厂老板老张，一位是跨境独立站主理人小李。同样的 24 小时，接入智枢 AI 前后，是两种完全不同的经营节奏。</p>' +
+          '<h3>老张 // 制造厂老板的 24h</h3>' +
+          '<p class="dossier-note">宁波非标五金制造 · 65 人 · 年产值约 4,000 万 · 企业 AI+ERP</p>' +
+          timeline([
+            ['00:30', '睡前刷生产群，担心夜班设备报修与明早急单。', 'AI 值守设备振动与温度曲线，异常自动派工并预留备机。'],
+            ['06:30', '被车间主任电话叫醒：3 号注塑机异响，急单交期要崩。', '预警已提前 6 小时推送，维修工单与备机切换方案就绪。'],
+            ['08:10', '四个车间拿 Excel 对口径，手工排产一上午。', '5 秒全局排产，交期、机台负荷与物料缺口一屏推演。'],
+            ['10:00', '客户临时插单，全厂重排，车间吵成一团。', 'AI 秒级推演插单影响，自动通知受影响的订单与班组。'],
+            ['12:30', '供应商送货单价对不上，采购放下饭碗去吵。', '拍照入库自动核对 12 项物料，拦截 ¥1,500 差价并通知采购。'],
+            ['15:00', '仓库呆滞料压了 200 万，没人敢拍板处理。', '动态库存预警与替代用料建议，直接释放现金流。'],
+            ['18:00', '经营会各报各的，这单到底赚不赚月底才知道。', '业财一体实时毛利，每笔订单的料工费与回款一屏看清。'],
+            ['22:00', '陪客户应酬完，回公司继续看报表、催回款。', 'AI 自动跟单与差异化催收，老张回家陪家人。'],
+            ['23:30', '手机仍响个不停，睡不踏实。', '数字员工值守，次日 07:00 自动推送经营晨报。']
+          ]) +
+          '<h3>小李 // 出海主理人的 24h</h3>' +
+          '<p class="dossier-note">跨境品牌独立站 · 一人公司 · 客单价 $800–$6,000 · 一人公司 AI 矩阵</p>' +
+          timeline([
+            ['00:40', '美国客户发来询盘，小李熟睡未回，大单被同行接走。', '多语种销冠 Agent 8 秒响应，调用产品库报价并收下 $4,200 定金。'],
+            ['07:00', '起床先回 47 条 WhatsApp，早饭凉了。', 'AI 已分层：12 条高意向待小李确认，35 条标准问题已回复。'],
+            ['08:30', '写独立站 SEO 文章，一写就是一上午。', '5 条短视频脚本 + 2 篇 SEO 长文已生成并定时发布。'],
+            ['10:30', '德国客户要报价，翻 Excel 算价、查运费。', 'AI 调产品库与实时运费，德语阶梯报价 10 秒生成。'],
+            ['12:00', '供应商催款、平台账单对不上，只能先垫付。', '自动对账并标记一笔多付运费，生成催付与核销清单。'],
+            ['14:00', '拍产品图、剪视频、配字幕，精力被榨干。', 'AI 生成多尺寸素材与口播稿，小李只审品牌调性。'],
+            ['16:00', '一边回客服，一边做报关单、填物流单、催供应商。', '全自动跟单 RPA 生成报关与物流单据，客户自动收到节点播报。'],
+            ['18:00', '手动发社媒，发完还要盯评论与私信。', '内容矩阵定时分发，全网询盘自动归集到统一工作台。'],
+            ['21:00', '客服接到深夜，重复问题回到嗓子哑。', 'AI 多语种接管，只把高意向与异常订单转给小李。'],
+            ['01:30', '还在回邮件，第二天顶着黑眼圈选品。', '小李已睡，AI 继续谈判、接单、记账，全球业务自转。']
+          ]) +
+          '<div class="dossier-callout"><span class="k">叙事注 // Editorial Note</span>老张买回的是一整晚的睡眠与对全厂的掌控感；小李买回的是不再被琐事切碎的时间。智枢交付的不是一个聊天框，而是把「最后一公里」的执行动作真正接过去。</div>' +
+          actions([
+            { dossier: 'doc-pillar-erp', label: '查看企业 AI+ERP 物种档案 // DOC-02A' },
+            { dossier: 'doc-pillar-opc', label: '查看一人公司 AI 配置清单 // DOC-02B' },
+            { dossier: 'doc-contact', label: '预约我的真实一天诊断' }
+          ]) +
+          '<p class="dossier-note">DOC-STORY // 基于真实交付现场整理的典型一天 · 数据已做脱敏与合并处理</p>';
+      }
+    },
+
     'doc-chronicle': {
       code: 'DOC-03A // THE CHRONICLE',
       category: '演进纪元 · Evolution & Roadmap',
@@ -159,19 +211,19 @@
       render: function () {
         return '' +
           '<p class="dossier-lead">自 2015 年创立宁波依然网络科技以来，我们用十年车间排产、进销存账本与政企系统集成功底，奠定了比纯算法初创团队更懂实体制造的工程壁垒。</p>' +
-          '<h3>2015-22 · PHASE 0 · 实业信息化筑基期 [依然网络创立]</h3>' +
+          '<h3 data-dossier-anchor="phase-2015-22">2015-22 · PHASE 0 · 实业信息化筑基期 [依然网络创立]</h3>' +
           '<p><strong>深耕生产管理系统、进销存系统与政企信息化集成，获评国家级科技型中小企业</strong></p>' +
           '<p>在宁波及长三角积累多项核心软件著作权，深度交付佳乐股份、凯孚新材料、中国—中东欧国家创新合作研究中心等实业与科研院所项目，吃透工业 BOM 与供应链底层逻辑。</p>' +
-          '<h3>2023 · PHASE I · AI 原型破壁期</h3>' +
+          '<h3 data-dossier-anchor="phase-2023">2023 · PHASE I · AI 原型破壁期</h3>' +
           '<p><strong>底层架构重构：企业级 RAG 与老旧 ERP 数据库无损接入引擎立项</strong></p>' +
           '<p>攻克工业非标单据、多源异构报表与复杂进销存账本的幻觉抑制难题，确立“旧系统无损升级 + 面向实体落地”的核心技术路线。</p>' +
-          '<h3>2024 · PHASE II · 商业深潜期</h3>' +
+          '<h3 data-dossier-anchor="phase-2024">2024 · PHASE II · 商业深潜期</h3>' +
           '<p><strong>双引擎商业闭环：定制化 AI+ERP 与一人公司 AI 套件深入制造与跨境一线</strong></p>' +
           '<p>携手新材料制造、生鲜食材供应链与跨境独立站品牌完成私有化交付，建立“免费培养 1 名内部系统管理员 + 1对1 驻场赋能”交付标准。</p>' +
-          '<h3>2025-26 · PHASE III · 规模化普惠期 [CURRENT]</h3>' +
+          '<h3 data-dossier-anchor="phase-2025-26">2025-26 · PHASE III · 规模化普惠期 [CURRENT]</h3>' +
           '<p><strong>多智能体（Multi-Agent）自主协同网络与商协会数字化服务底座全面开放</strong></p>' +
           '<p>依托模块化定制母版与行业商协会数字化平台，将量身定制周期缩短 60%，让长三角乃至全国中小企业以轻量级投入拥有专属企业硅基大脑。</p>' +
-          '<h3>2027+ · PHASE IV · 远景奇点</h3>' +
+          '<h3 data-dossier-anchor="phase-2027">2027+ · PHASE IV · 远景奇点</h3>' +
           '<p><strong>具身商业网络：跨企业自治供应链与硅基商业共同体</strong></p>' +
           '<p>不同企业的 AI+ERP 节点实现安全协议下的自主询价、博弈、履约与结算，构建下一代智能商业基础设施。</p>' +
           '<div class="dossier-callout"><span class="k">路径判断 // Thesis</span>产业 AI 的壁垒不在模型本身，而在十年实业流程沉淀、旧系统接入能力与真实交付现场的理解。</div>' +
@@ -251,7 +303,7 @@
             ['HEADQUARTERS · 研发与实业交付中心', '中国 · 宁波市江北区<br>（长三角实业交付中心）<br><span class="mono">29.8892°N / 121.5503°E</span>']
           ]) +
           '<h3>TRANSMISSION PROTOCOL // 加密直达</h3>' +
-          '<form id="contact-form" onsubmit="handleFormSubmit(event)">' +
+          '<form id="contact-form">' +
           '<div class="field"><label for="intent-select">您的联络意图 / INTENT</label>' +
           '<select id="intent-select" name="intent">' +
           '<option value="企业 AI+ERP 量身定制咨询">企业 AI+ERP 量身定制咨询</option>' +
@@ -281,7 +333,7 @@
   };
 
   window.NexusUI.registerDossiers(registry, [
-    'doc-overview', 'doc-manifesto', 'doc-pillar-erp', 'doc-pillar-opc',
+    'doc-overview', 'doc-manifesto', 'doc-pillar-erp', 'doc-pillar-opc', 'doc-story',
     'doc-chronicle', 'doc-clients', 'doc-alliance', 'doc-contact'
   ], {
     contactId: 'doc-contact',

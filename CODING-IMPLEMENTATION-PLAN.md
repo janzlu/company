@@ -1,293 +1,285 @@
-# 依然智枢 (YIRAN NEXUS) 官网重构 · 分包与 Coding 实施计划文档
+# 依然智枢 (YIRAN NEXUS) 官网 V2 升级 · 开发任务包（WPs）与质量要求文档
 
-> **【致执行模型 DeepSeek-V4 的执行说明】**
-> 1. 请先阅读本文件与同目录下的 [WEBSITE-REPLAN.md](file:///Users/mon3xey/projects/company/WEBSITE-REPLAN.md)、[MASTER.md](file:///Users/mon3xey/projects/company/design-system/yiran-nexus/MASTER.md)，以及现网源码（`nexus-ai-website/*` 与 `nexus-ai-services-website/*`）以提取全部原始文案与交互逻辑。
-> 2. 严格按本文档依次完成 **WP1（`shared/*`）→ WP2（`nexus-ai-website/*`）→ WP3（`nexus-ai-services-website/*`）→ WP4（自检与收尾）** 的全部代码编写，严禁使用占位符（`TODO`/`FIXME`/省略号）或删减任何原始业务文案、客户名录、电话邮箱与备案号。
-> 3. 完成后将由验收方按照本文档「四、 交付与验收标准（Acceptance Criteria）」进行逐项硬性验收。
-
-> **关联需求与设计基线**：[WEBSITE-REPLAN.md](file:///Users/mon3xey/projects/company/WEBSITE-REPLAN.md) · [MASTER.md](file:///Users/mon3xey/projects/company/design-system/yiran-nexus/MASTER.md)  
-> **架构红线**：低耦合高内聚 · 单业务源码文件严格 `< 1000` 行（目标 `< 550` 行） · 零外部重框架依赖（移除 Tailwind CDN / Three.js / FontAwesome） · 100% 原始业务内容与交互能力无损保留。
+> **【致 Coding 执行方的总纲说明】**
+> 1. 本文档为 [UPGRADE-PLAN-V2.md](file:///Users/mon3xey/projects/company/UPGRADE-PLAN-V2.md) 的工程级分发执行契约。请严格依据本文档定义的 **WP1 → WP2 → WP3 → WP4** 任务包顺序开发。
+> 2. **五大核心升级硬指标**：
+>    - **大标题极致精简**：主刊首屏 H1 锁定为 8 字主标 **`让智能，真正成为生产力。`**（副刊锁定为 **`让智能，真正落地每一笔订单。`**），对标参考案例的极简宏大排版节奏。
+>    - **全屏恢弘 AI 基建视觉**：废除局促的局部小图框，首屏采用 **全屏大型数实交融 AI 基建场景图 + 全屏 Canvas 微动光流与算力脉冲动画背景**，各核心业务区配备契合「AI赋能、AI一人公司、AI效率、AI赚钱」的新纪元高质量配图。
+>    - **核心重点直观对账**：主展区采用 **「业务场景前/后直观收益对账（Before 传统痛点 vs After 智枢收益）」+ 3 项关键产出指标（`秒级排产`、`24h自动成单`、`旧系统零推倒`）**，彻底去除主干晦涩技术黑话。
+>    - **独立补充叙事**：在核心对账单下方独立设置 **「实业老板老张与超级个体小李的真实一天」** 24 小时前后对比时间轴作为补充叙事。
+>    - **原位 Toggle 隐现渐进披露**：**全面废除右侧弹窗抽屉与背景滚动锁死遮罩**，所有 L2/L3 深度内容（技术规格、完整 24h 故事、纪元详情、ROI 滑块终端、预约表单）一律改为 **原位 Toggle 隐现面板（Inline Toggle Show/Hide）**，点击 `[+ 展开...]` 在当前区块下方平滑展开，再次点击 `[- 收起...]` 或按 `Esc` 原位折叠。
+> 3. **内容 100% 零丢失红线**：现网已有的 10 家实业/院所客户名录、林经理电话邮箱、ICP 备案号、三大信仰、两大物种、五个纪元、定制五步法、4 大案例数据、沙盒演示与 ROI 公式必须 100% 保留在主干或原位 Toggle 面板中。
 
 ---
 
 ## 一、 目标代码架构与模块边界设计
 
-为彻底解决现网两套页面样式割裂、HTML 与巨量文案/逻辑耦合堆砌的问题，采用 **「1 个共享核心层 (`shared/`) + 2 个独立站点应用层 (`nexus-ai-website/` 与 `nexus-ai-services-website/`) + 1 套机检测试层 (`tests/`)」** 的高内聚、低耦合架构：
+采用 **「1 个共享核心层 (`shared/`) + 2 个独立站点应用层 (`nexus-ai-website/` 与 `nexus-ai-services-website/`) + 1 套端到端自动化机检层 (`tests/`)」** 架构，严格遵守高内聚、低耦合与单文件行数红线：
 
 ```mermaid
 flowchart TD
-    subgraph Shared["共享核心层 /shared (Design Tokens + Dossier Engine)"]
-        S1["shared/industrial-magazine.css<br/>全局色彩令牌 · 排印原语 · 发丝线账本 · 准星画框 · 抽屉样式"]
-        S2["shared/dossier-drawer.js<br/>通用右侧工业档案抽屉控制器 · 焦点捕获 · 键盘Esc · Hash路由 · 光晕与复制工具"]
+    subgraph Shared["共享核心层 /shared (Design Tokens + Inline Toggle & Canvas Engine)"]
+        S1["shared/industrial-magazine.css<br/>黑曜石令牌 · 全屏基建Hero样式 · 前后收益对账表 · 3大指标条 · 原位Toggle隐现动画"]
+        S2["shared/dossier-drawer.js<br/>原位Toggle隐现控制器 (NexusUI) · 全屏AI基建光流Canvas引擎 · Esc折叠 · Hash深链"]
     end
 
-    subgraph BrandSite["品牌主刊 /nexus-ai-website (Flagship Brand Issue)"]
-        B1["nexus-ai-website/index.html<br/>L1 极致留白主干 DOM + 首屏 SVG 工业星盘 + 机床摄影带"]
-        B2["nexus-ai-website/styles.css<br/>主刊专属排版与星盘动画样式"]
-        B3["nexus-ai-website/dossiers.js<br/>DOC-00 ~ DOC-05 档案数据与模板注册表"]
-        B4["nexus-ai-website/app.js<br/>主刊时钟 · 意图预填联动 · 加密联络表单提交"]
+    subgraph BrandSite["品牌主刊 /nexus-ai-website (Flagship Brand & Story Issue)"]
+        B0["nexus-ai-website/assets/*<br/>新纪元AI基建全景图 · 企业AI+ERP赋能图 · 一人公司AI赚钱效率矩阵图"]
+        B1["nexus-ai-website/index.html<br/>8字精简主标 + 全屏基建动效 + 3大指标 + 前后收益对账 + 真实一天独立叙事 + 原位Toggle容器"]
+        B2["nexus-ai-website/styles.css<br/>主刊专属全屏视觉合成、对账单与24h故事时间轴样式"]
+        B3["nexus-ai-website/dossiers.js<br/>DOC-00 ~ DOC-05 及 DOC-STORY 原位展开面板数据与模板注册表"]
+        B4["nexus-ai-website/app.js<br/>主刊初始化 · 真实一天视角切换 · 意图联动展开 · 联络表单提交"]
     end
 
-    subgraph ServicesSite["业务定制副刊 /nexus-ai-services-website (Customization & Sandbox Issue)"]
-        C1["nexus-ai-services-website/index.html<br/>L1 主干 DOM + SVG 三层桥接图 + 黑曜石命令行沙盒"]
-        C2["nexus-ai-services-website/styles.css<br/>副刊专属终端卡片与工业滑块样式"]
-        C3["nexus-ai-services-website/dossiers.js<br/>SRV-01 ~ SRV-06 档案注册表 (含 ROI 测算仪与诊断表单模板)"]
-        C4["nexus-ai-services-website/app.js<br/>双核终端沙盒引擎 · 实时日志流 · ROI 精算逻辑 · 预约表单提交"]
+    subgraph ServicesSite["业务定制副刊 /nexus-ai-services-website (Sandbox & ROI Issue)"]
+        C1["nexus-ai-services-website/index.html<br/>全屏基建Hero + 破局对账 + 双核命令行沙盒 + 五步法 + ROI横幅 + 案例对账 + 原位Toggle容器"]
+        C2["nexus-ai-services-website/styles.css<br/>副刊专属终端沙盒、对比账本与ROI工业滑块样式"]
+        C3["nexus-ai-services-website/dossiers.js<br/>SRV-01 ~ SRV-06 原位展开面板注册表 (含ROI测算仪与诊断预约表单)"]
+        C4["nexus-ai-services-website/app.js<br/>双核终端沙盒引擎 · 实时指令流 · ROI精算同步 · 预约表单提交"]
     end
 
     subgraph QA["自动化机检与审计层 /tests"]
-        T1["tests/verify-sites.mjs<br/>内容零丢失核验 · 行数预算检查 · 交互状态机检 · XSS与A11y断言"]
+        T1["tests/verify-sites.mjs<br/>代码规模门禁 · 5大升级要点核验 · 原位Toggle交互断言 · 100%内容零丢失机检"]
     end
 
     S1 --> B2
     S1 --> C2
     S2 --> B4
     S2 --> C4
+    B0 --> B1
+    B0 --> C1
     B3 --> B4
     C3 --> C4
     BrandSite --> T1
     ServicesSite --> T1
 ```
 
-### 模块规模预算与职责清单（严格受控于 `< 1000` 行红线）
+### 模块规模预算与职责清单（硬性门禁：单文件 `< 1000` 行）
 
-| 文件路径 | 所属模块 | 单一职责说明 | 预计行数 | 上限红线 |
-| :--- | :--- | :--- | :---: | :---: |
-| `shared/industrial-magazine.css` | 共享样式底座 | CSS 变量、字体族、`.site-head`、1:3/5:7 杂志网格、`.ledger-row`、`.mark`、`.hero-frame`、`.band`、`.cursor-glow`、`.dossier-drawer` | ~380 行 | 600 行 |
-| `shared/dossier-drawer.js` | 共享交互底座 | `NexusDossier` 抽屉生命周期（打开/关闭/上下篇切换/Esc/遮罩/Hash深链/焦点恢复）、`.reveal` 观察器、`.cursor-glow` 跟随、`copyText()` | ~250 行 | 500 行 |
-| `nexus-ai-website/index.html` | 主刊视图层 | 主刊 L1 极简主干 HTML 结构（00 首屏星盘 ~ 05 直联台）与通用抽屉挂载容器 | ~360 行 | 600 行 |
-| `nexus-ai-website/styles.css` | 主刊样式层 | `@import "../shared/industrial-magazine.css"` + 主刊首屏 SVG 星盘与 POLE A/B 刻度样式 | ~160 行 | 400 行 |
-| `nexus-ai-website/dossiers.js` | 主刊档案数据层 | `DOC-00` 至 `DOC-05` 共 6 份结构化工业档案定义（含三大信仰、双翼规格、5大纪元、10家客户、IR备忘录与联络表单） | ~310 行 | 600 行 |
-| `nexus-ai-website/app.js` | 主刊控制层 | 注册主刊档案、`UTC+8` 实时时钟、`selectIntent(intent)` 唤起 `DOC-05` 并预填意图、`handleFormSubmit(e)` | ~130 行 | 350 行 |
-| `nexus-ai-services-website/index.html` | 副刊视图层 | 副刊 L1 主干 HTML（00 SVG三层桥接 + 01 破局 + 02 双引擎黑曜石终端沙盒 + 03 五步法 + 04 ROI横幅 + 05 案例账本 + 06 预约） | ~420 行 | 650 行 |
-| `nexus-ai-services-website/styles.css` | 副刊样式层 | `@import "../shared/industrial-magazine.css"` + `.terminal-card` 命令行终端、SVG 数据流、ROI 工业滑块样式 | ~200 行 | 450 行 |
-| `nexus-ai-services-website/dossiers.js` | 副刊档案数据层 | `SRV-01` 至 `SRV-06` 工业档案定义（含痛点与新旧ERP对比表、双引擎8模块详解、五步法细则、ROI 3滑块测算仪 DOM、4大案例复盘、诊断表单） | ~360 行 | 650 行 |
-| `nexus-ai-services-website/app.js` | 副刊控制层 | `switchProductTab()`、`runErpDemo(0..2)`、`runSoloDemo(0..2)`、`setRoiType()`、`calculateROI()`、`submitConsultForm()` 与抽屉挂载钩子 | ~270 行 | 550 行 |
-| `tests/verify-sites.mjs` | 自动化机检套件 | 静态与运行时机检脚本（DOM 结构、文案100%保留率、沙盒与ROI计算、抽屉开关、文件行数与反模式检查） | ~300 行 | — |
+| 文件路径 | 所属工作包 | 单一职责说明 | 目标行数 | 硬性上限 |
+| :--- | :---: | :--- | :---: | :---: |
+| `shared/industrial-magazine.css` | WP1 | 全局色彩/字体令牌、全屏 Hero 背景层、3 项关键指标条、前后收益对账表、24h 时间轴、原位 `.toggle-panel` 折叠过渡 | ~380 行 | `< 500` 行 |
+| `shared/dossier-drawer.js` | WP1 | `window.NexusUI` 原位 Toggle 隐现引擎、全屏 AI 基建光流粒子 Canvas 动画、滚动揭示、复制与防 XSS 工具 | ~320 行 | `< 500` 行 |
+| `nexus-ai-website/index.html` | WP2 | 主刊 L1 极简主干 DOM（8字大标题、全屏基建图与Canvas、3项指标、前后收益对账、真实一天补充叙事、纪元与合作）及原位 `.toggle-panel` 挂载点 | ~390 行 | `< 500` 行 |
+| `nexus-ai-website/styles.css` | WP2 | 主刊首屏大图融合遮罩、双核配图卡片、真实一天双视角 Tab 与时间轴样式 | ~180 行 | `< 400` 行 |
+| `nexus-ai-website/dossiers.js` | WP2 | 主刊 9 个原位隐现面板定义（`doc-overview`, `doc-manifesto`, `doc-pillar-erp`, `doc-pillar-opc`, `doc-story`, `doc-chronicle`, `doc-clients`, `doc-alliance`, `doc-contact`） | ~340 行 | `< 500` 行 |
+| `nexus-ai-website/app.js` | WP2 | 主刊面板注册、真实一天视角切换（`switchStoryRole('erp'|'solo')`）、`selectIntent` 联动展开 `doc-contact`、表单提交 | ~160 行 | `< 350` 行 |
+| `nexus-ai-services-website/index.html` | WP3 | 副刊 L1 主干 DOM（全屏基建首屏、3项关键指标、双核终端沙盒、五步法、ROI 横幅、4大案例）及原位 `.toggle-panel` 挂载点 | ~430 行 | `< 600` 行 |
+| `nexus-ai-services-website/styles.css` | WP3 | 副刊黑曜石命令行终端沙盒、工业滑块与内联展开区样式 | ~220 行 | `< 450` 行 |
+| `nexus-ai-services-website/dossiers.js` | WP3 | 副刊 7 个原位隐现面板定义（`srv-bottleneck`, `srv-erp-spec`, `srv-solo-spec`, `srv-process`, `srv-roi`, `srv-cases`, `srv-consult`） | ~350 行 | `< 600` 行 |
+| `nexus-ai-services-website/app.js` | WP3 | 副刊双核沙盒切换与场景演示、ROI 3 滑块实时测算与主干同步、诊断预约表单转义提交 | ~360 行 | `< 600` 行 |
+| `tests/verify-sites.mjs` | WP4 | 全量静态与运行时自动化机检脚本（行数门禁、视觉与配图核验、原位 Toggle 状态机、100% 内容保留、XSS 防护） | ~450 行 | — |
 
 ---
 
 ## 二、 核心跨模块接口契约（Interface Contracts）
 
-在分包并行开发前，锁定 `shared/dossier-drawer.js` 对外暴露的全局接口 `window.NexusUI`，确保 WP2（主刊）与 WP3（副刊）零耦合调用：
+为保证主刊（WP2）、副刊（WP3）与测试套件（WP4）平滑衔接，`shared/dossier-drawer.js` 暴露的 `window.NexusUI` 必须严格实现以下原位 Toggle 隐现契约（同时保留原方法名向后兼容）：
 
 ### 2.1 `window.NexusUI` 接口签名
 ```javascript
 window.NexusUI = {
   /**
-   * 注册当前页面的档案字典
+   * 注册当前页面的原位隐现面板字典，并在页面对应的 [data-toggle-panel="<id>"] 容器中完成初始化
    * @param {Record<string, {
-   *   code: string,        // 如 "DOC-01 // MANIFESTO" 或 "SRV-04 // ROI SIMULATOR"
-   *   category: string,    // 如 "使命与认知桥接"
-   *   title: string,       // 档案主标题
-   *   subtitle?: string,   // 英文或副标题
-   *   render: () => string,// 返回档案正文 HTML 字符串
-   *   onMount?: (bodyEl: HTMLElement) => void // 抽屉挂载后的回调（用于绑定 ROI 滑块或表单事件）
+   *   code: string,        // 面板编号，如 "DOC-02A // ERP ARCHITECTURE"
+   *   category: string,    // 分类铭牌，如 "企业级 AI+ERP 技术规格"
+   *   title: string,       // 面板主标题
+   *   subtitle?: string,   // 副标题
+   *   render: () => string,// 返回面板内部 HTML 字符串
+   *   onMount?: (panelEl: HTMLElement) => void // 面板首次渲染挂载后的回调
    * }>} registry
-   * @param {string[]} orderedIds // 用于抽屉底部「上一份 / 下一份」顺序切换
+   * @param {string[]} orderedIds
    */
   registerDossiers(registry, orderedIds),
 
   /**
-   * 打开指定 ID 的右侧工业档案抽屉
-   * @param {string} id - 档案 ID（如 'doc-manifesto', 'srv-roi'）
-   * @param { HTMLElement | null } [triggerEl] - 触发按钮元素（关闭时自动归还焦点）
+   * 切换指定 ID 的原位隐现面板（若当前收起则展开，若已展开则收起）
+   * @param {string} id - 面板 ID（如 'doc-pillar-erp', 'doc-story', 'srv-roi'）
+   * @param {HTMLElement | null} [triggerEl] - 触发按钮
+   * @returns {boolean} 切换后的展开状态（true=已展开, false=已收起）
+   */
+  toggleDossier(id, triggerEl),
+
+  /**
+   * 显式展开指定 ID 的原位隐现面板（幂等）
+   * 更新面板 aria-hidden="false"、移除 hidden 属性、添加 .is-open 类；
+   * 同步更新所有关联触发按钮 [data-toggle="<id>"] / [data-dossier="<id>"] 的 aria-expanded="true" 与文案前缀（+ 改为 -）
    */
   openDossier(id, triggerEl),
 
   /**
-   * 关闭当前打开的档案抽屉，解除背景滚动锁定并归还焦点
+   * 显式收起指定 ID 的原位面板（若不传 id 则收起当前最后打开的面板），并归还焦点至触发按钮
+   * @param {string} [id]
    */
-  closeDossier(),
+  closeDossier(id),
 
   /**
-   * 抽屉内前后翻页
-   * @param {number} delta - -1 为上一份，+1 为下一份
+   * 在有序面板间切换（收起当前面板并展开上/下一个面板）
+   * @param {number} delta - -1 或 +1
    */
   stepDossier(delta),
 
   /**
+   * 初始化首屏全屏 AI 基建微动光流与智能算力节点脉冲 Canvas 背景
+   * @param {string} selector - 默认为 '.hero-field'
+   */
+  initHeroCanvas(selector),
+
+  /**
    * HTML 转义工具函数（防 XSS）
-   * @param {unknown} str
-   * @returns {string}
    */
   escapeHtml(str),
 
   /**
-   * 剪贴板复制并回显工业状态反馈
-   * @param {string} text
-   * @param {HTMLElement} btn
+   * 剪贴板复制并回显状态
    */
   copyText(text, btn)
 };
 ```
 
-### 2.2 声明式 DOM 触发契约
-任何 L1 主干上的按钮或发丝线行只需声明 `data-dossier="档案ID"`，即由 `shared/dossier-drawer.js` 通过事件委托自动绑定点击与键盘激活，无需编写重复的内联 `onclick`：
-```html
-<button type="button" class="dossier-trigger" data-dossier="doc-manifesto">
-  <span class="mark" aria-hidden="true"></span>
-  <span>+ 调取档案 // DOC-01</span>
-</button>
-```
+### 2.2 原位 Toggle 声明式 DOM 契约
+1. **触发器（Trigger）**：页面上任何带有 `data-toggle="<id>"` 或 `data-dossier="<id>"` 的按钮/行，点击时自动调用 `NexusUI.toggleDossier(id, trigger)`，切换展开与收起：
+   ```html
+   <button type="button" class="btn-toggle" data-toggle="doc-pillar-erp" data-dossier="doc-pillar-erp" aria-expanded="false" aria-controls="panel-doc-pillar-erp">
+     <span class="toggle-icon" aria-hidden="true">+</span>
+     <span class="toggle-label">展开 ERP 技术规格与无损升级方案 // DOC-02A</span>
+   </button>
+   ```
+2. **原位隐现面板容器（Inline Panel Container）**：紧随对应业务模块下方放置原位面板挂载点，默认带有 `hidden` 与 `aria-hidden="true"`，**不锁死 `document.body.style.overflow`**，不遮挡上下文：
+   ```html
+   <div class="toggle-panel" id="panel-doc-pillar-erp" data-toggle-panel="doc-pillar-erp" role="region" aria-hidden="true" hidden></div>
+   ```
 
 ---
 
-## 三、 分包工作包（Work Packages）与调度拓扑
+## 三、 开发任务包（Work Packages）详细规范
 
-### 3.1 分包依赖图（DAG）
-```mermaid
-flowchart LR
-    WP1["WP1 · 共享设计底座与档案抽屉引擎<br/>(shared/*)"] --> WP2["WP2 · 品牌主刊杂志化重构<br/>(nexus-ai-website/*)"]
-    WP1 --> WP3["WP3 · 业务副刊与黑曜石终端重构<br/>(nexus-ai-services-website/*)"]
-    WP2 --> WP4["WP4 · 自动化机检套件与全站验收<br/>(tests/verify-sites.mjs)"]
-    WP3 --> WP4
-```
-- **串并行策略**：先执行 **WP1** 并完成 `MiniMax-M3` 底座审计；随后 **WP2（品牌主刊）** 与 **WP3（业务副刊）** 可并行或紧接分包执行；最后执行 **WP4** 全量机检与终审。
+### WP1：新纪元视觉配图生成、共享样式底座与原位 Toggle 引擎
 
----
-
-### 3.2 WP1：工业杂志共享设计底座与右侧档案抽屉引擎
-
-- **分包角色**：`Core Design-System & UI Engine Subagent`
-- **输入依赖**：[WEBSITE-REPLAN.md](file:///Users/mon3xey/projects/company/WEBSITE-REPLAN.md)、[MASTER.md](file:///Users/mon3xey/projects/company/design-system/yiran-nexus/MASTER.md)、三个参考案例源码。
-- **交付文件**：
-  1. [`shared/industrial-magazine.css`](file:///Users/mon3xey/projects/company/shared/industrial-magazine.css)
-  2. [`shared/dossier-drawer.js`](file:///Users/mon3xey/projects/company/shared/dossier-drawer.js)
-- **详细编码任务**：
-  1. **CSS Tokens 与基础重置**：实现 `--bg: #0a0c0f`、`--ink: #eae6dc`、`--bronze: #b08c5c`、`--steel: #9fd8ff`、`--hairline` 等全套变量；配置自定义暗色滚动条、`:focus-visible` 1px 暖金焦点框与 `::selection` 反白高亮。
-  2. **杂志排版与网格组件**：
-     - `.site-head`：顶部 72px 固定导航栏，滚动超过 32px 后激活 `backdrop-filter: blur(12px)` 与 `1px solid var(--hairline-soft)` 底边。
-     - `.sec-grid`：林远式 `1fr : 3fr` 左粘性章节索引（`.sec-idx` sticky）+ 右主干内容区布局；移动端（`< 900px`）自动折叠为单列。
-     - `.ledger-list` & `.ledger-row`：陈默/林远式上下 1px 发丝线列表行，悬停时背景呈现极淡暖金渐变（`linear-gradient(90deg, rgba(232,224,204,0.035), transparent)`）且标题微移。
-     - `.mark`（12×12px 十字准星）、`.hero-frame`（首屏四角准星画框）、`.band`（窄幅全宽工业摄影过渡带，带上下黑曜石渐变遮罩与左下角等宽图注）、`.cursor-glow`（360px 暖铜微弱跟随光晕）。
-  3. **右侧工业档案抽屉样式与引擎 (`shared/dossier-drawer.js`)**：
-     - 构建 `.dossier-backdrop` 与 `.dossier-drawer`（`width: min(680px, 92vw)`，右侧滑入过渡 `cubic-bezier(0.16, 1, 0.3, 1)`）。
-     - 抽屉内部分为：顶部固定档案铭牌栏（档案代号 `code`、分类 `category`、`[ESC / 关闭 ×]`）、中部独立滚动正文区（支持表格、列表、指标卡、表单与滑块）、底部固定翻页与行动栏（`[← 上一档案]`、`[下一档案 →]`、快捷联络按钮）。
-     - 实现完整无障碍与幂等控制：重复调用 `openDossier` 平滑切换内容不闪烁；`Esc` 键与遮罩点击关闭；打开时设置 `document.body.style.overflow = 'hidden'` 并聚焦关闭按钮；关闭时恢复原触发按钮焦点；支持 URL `#dossier=xxx` 自动打开。
-- **WP1 验收与审计门禁**：
-  - 语法检查：`node --check shared/dossier-drawer.js` 退出码为 0。
-  - 行数红线检查：两文件均 `< 500` 行。
-  - 拉起 `MiniMax-M3` 对 WP1 进行独立交叉代码审计。
+- **涉及文件**：
+  1. `nexus-ai-website/assets/hero-ai-infrastructure.jpg`（新生成）
+  2. `nexus-ai-website/assets/engine-enterprise-erp.jpg`（新生成）
+  3. `nexus-ai-website/assets/engine-solopreneur-matrix.jpg`（新生成）
+  4. `shared/industrial-magazine.css`
+  5. `shared/dossier-drawer.js`
+- **具体开发要求**：
+  1. **高质量主题配图生成（3 张核心大图）**：
+     - `hero-ai-infrastructure.jpg`：**数实交融 AI 巨型基建全景**——深邃黑曜石夜空与恢弘的新纪元智能算力环、精密重工业母机、跨洋经纬流光交汇，采用冷钢蓝（`#9fd8ff`）与古铜金（`#b08c5c`）电影级光影，具备极强全屏视觉冲击力。
+     - `engine-enterprise-erp.jpg`：**AI 赋能智慧工厂与智能排产中枢**——现代化高精度数控产线与悬浮的 золотой/古铜色智能排产数据流、BOM 拓扑网络深度耦合，直观体现工业降本增效。
+     - `engine-solopreneur-matrix.jpg`：**AI 一人公司超级个体与全球创收矩阵**——极简深色全景指挥桌前，环绕 7 大自主运转的智能体全息星环、24h 跨国订单流与金色收益增长曲线，体现“一人活成一支精英团队、全天候自动赚钱”。
+  2. **`shared/industrial-magazine.css` 升级**：
+     - 全屏沉浸式 Hero 布局（`.hero-fullbleed`）：支持底层高清场景大图 `.hero-bg-img` + 中层 `.hero-field` 动态光流 Canvas + 顶层暗角渐变遮罩，衬托左/中极具张力的 8 字超大衬线标题（`clamp(2.8rem, 6.2vw, 5.4rem)`，参考 `myhomepage` 排版）。
+     - **3 项关键产出指标条（`.key-metrics-strip`）**：3 列高对比度指标卡，突出大号衬线数字（`5s 秒级排产`、`7×24h 自动成单`、`0中断 旧系统零推倒`）。
+     - **业务场景前/后直观收益对账组件（`.benefit-ledger`）**：左列「Before · 传统业务痛点」（暗灰弱化标示痛点）vs 右列「After · 智枢 AI 直观收益」（暖金/冷钢蓝高亮核心产出指标），带直观对比视觉分隔。
+     - **独立补充叙事「真实一天」时间轴组件（`.day-story-box` & `.day-timeline`）**：支持「实业老板老张」与「超级个体小李」双视角 Tab 切换，单行呈現时间节点、`传统耗时痛点 ➔ AI 接管收益`。
+     - **原位 Toggle 隐现面板样式（`.toggle-panel`）**：废除 `position: fixed` 右侧抽屉与遮罩，改为内联块级风琴容器，带顶部工业铭牌栏（编号、标题、`[收起面板 ×]`）、中部结构化内容区、底部 `[↑ 收起详情]` 快捷栏，展开/收起具备平滑过渡。
+  3. **`shared/dossier-drawer.js` 升级**：
+     - 实现原位 Toggle 隐现状态机（`toggleDossier`、`openDossier`、`closeDossier`），点击触发器时原地展开/折叠对应面板，动态切换按钮上的 `+` / `-` 指示符与 `aria-expanded` 属性。
+     - 实现 `initHeroCanvas('.hero-field')`：在首屏 Canvas 上绘制流畅的新纪元智能基建日冕光弧、算力脉冲节点与金色/冷钢蓝微粒流（鼠标移动时产生微弱引力偏转，`prefers-reduced-motion: reduce` 时静态绘制首帧）。
 
 ---
 
-### 3.3 WP2：品牌主刊（`nexus-ai-website`）工业杂志化重构
+### WP2：品牌主刊（`nexus-ai-website`）极简宏大化与直观对账重构
 
-- **分包角色**：`Brand Flagship Issue Subagent`
-- **输入依赖**：WP1 产出的 `shared/*`、现网 [`nexus-ai-website/index.html`](file:///Users/mon3xey/projects/company/nexus-ai-website/index.html) 及 [`nexus-ai-website/app.js`](file:///Users/mon3xey/projects/company/nexus-ai-website/app.js)。
-- **交付文件**：
-  1. [`nexus-ai-website/index.html`](file:///Users/mon3xey/projects/company/nexus-ai-website/index.html)
-  2. [`nexus-ai-website/styles.css`](file:///Users/mon3xey/projects/company/nexus-ai-website/styles.css)
-  3. [`nexus-ai-website/dossiers.js`](file:///Users/mon3xey/projects/company/nexus-ai-website/dossiers.js)
-  4. [`nexus-ai-website/app.js`](file:///Users/mon3xey/projects/company/nexus-ai-website/app.js)
-  5. [`nexus-ai-website/README.md`](file:///Users/mon3xey/projects/company/nexus-ai-website/README.md)
-- **详细编码任务**：
-  1. **彻底移除外部冗余依赖与反模式**：删除 Tailwind CDN `<script>`、Three.js CDN `<script>`、`#webgl-canvas`、`#cursor-dot` / `#cursor-ring`。
-  2. **L1 极致留白主干重构 (`index.html`)**：
-     - **Header**：左侧 `依然智枢 · YIRAN NEXUS` + `EST. 2015`；中部 `01 使命 / 02 基石 / 03 纪元 / 04 生态 / 05 连接`；右侧 `业务沙盒与定制副刊 ↗` + `UTC+8` 实时时钟 + `[发起联络]`（触发 `doc-contact` 抽屉）。
-     - **00 Hero (`#hero`)**：四角准星 `.hero-frame` + 右侧陈默式 **动态 SVG 工业星盘与认知桥接几何图**（含旋转刻度环 `.dial`、绘制路径 `.draw` 与焦点脉冲节点 `.focal`）；左侧资质铭牌、衬线巨幅主标题、单句导语、双行动按钮（`进入业务沙盒与定制 →`、`[+ 调取企业总览档案 // DOC-00]`）；底部四联等宽指标条与宁波经纬读数（`LAT 29.8892°N · LON 121.5503°E`）。
-     - **01 使命宣言 (`#manifesto`)**：1:3 杂志分栏；右栏上方为 5:7 宣言对仗（「跨越硅基智能与碳基实业的鸿沟」 + `POLE A 认知层 ⇄ NEXUS BRIDGE ⇄ POLE B 物理与服务层` 极简矢量刻度尺），下方为 3 条发丝线信仰目录行（`BELIEF 01 科技平权`、`BELIEF 02 拒绝标准品桎梏`、`BELIEF 03 结果导向`），点击任一行打开 `doc-manifesto` 抽屉查阅全文。
-     - **工业摄影过渡带 1 (`.band`)**：使用 [`assets/workshop-lathe-machine.jpg`](file:///Users/mon3xey/projects/company/nexus-ai-website/assets/workshop-lathe-machine.jpg)，配图注 `FIG.01 // PHYSICAL MANUFACTURING FLOOR · NINGBO INDUSTRIAL BASE`。
-     - **02 战略双翼 (`#pillars`)**：两条杂志级通栏大条目（`SPECIES 01 企业级 AI+ERP 智能中枢`、`SPECIES 02 一人公司 AI 数字硅基团队`），主干仅展示衬线大标题、拉丁副标、单句核心定义与 3 个等宽规格指标，配 `[+ 调取物种规格档案]`（分别打开 `doc-pillar-erp` 与 `doc-pillar-opc`）与 `[↗ 进入副刊沙盒]`。
-     - **03 演进纪元与实业背书 (`#chronicle`)**：5 行发丝线编年史账本（`2015-22`、`2023`、`2024`、`2025-26 [CURRENT]`、`2027+`），每行仅露年份、阶段代号、单行里程碑标题与 `[+ 纪元档案]`（触发 `doc-chronicle`）；下方紧接 **10 家实业与科研院所工业铭牌索引网格**（佳乐股份、凯孚新材料、楚鑫材料、宁波艾升纸制、天坤建筑、Floravase、日合柑桔、食全食美、中国—中东欧国家创新合作研究中心、宁波海上丝绸之路研究院），配 `[+ 查阅标杆客户交付背景 // DOC-03B]`。
-     - **工业摄影过渡带 2 (`.band`)**：使用 [`assets/lathe-boring.jpg`](file:///Users/mon3xey/projects/company/nexus-ai-website/assets/lathe-boring.jpg)，配图注 `FIG.02 // LAST-MILE PRECISION · FROM LLM TO SHOP FLOOR`。
-     - **04 投资与生态 (`#alliance`)**：陈默式三栏发丝线对账单（`CAPITAL VISION 资本价值`、`CHANNEL PARTNER 渠道与商协会共赢`、`TECH ALLIANCE 算力与模型生态`），主干仅列标题与核心命题，点击 `[+ 调取投资与合作备忘录]` 打开 `doc-alliance`，支持一键调用 `selectIntent(...)` 切入联络表单抽屉。
-     - **05 建立连接 (`#contact`)**：主干仅展示巨幅衬线号召语 + 三栏发丝线直联名片（林经理专线 `159-6841-4820` 微信同号、`bd@nbyiran.com`、`ir@nbyiran.com`、宁波市江北区研发中心）+ `[▶ 启动加密联络指令台 // DOC-05]` 按钮。
-  3. **L2/L3 档案库实现 (`dossiers.js`)**：完整收录 `doc-overview` (`DOC-00`)、`doc-manifesto` (`DOC-01`)、`doc-pillar-erp` (`DOC-02A`)、`doc-pillar-opc` (`DOC-02B`)、`doc-chronicle` (`DOC-03A`)、`doc-clients` (`DOC-03B`)、`doc-alliance` (`DOC-04`)、`doc-contact` (`DOC-05` 含 5 字段加密直达表单)，确保原页面每一句文案 100% 完整保留。
-- **WP2 验收与审计门禁**：
-  - `node --check nexus-ai-website/dossiers.js && node --check nexus-ai-website/app.js` 退出码为 0。
-  - 所有单文件行数 `< 500` 行。
-  - 拉起 `MiniMax-M3` 对 WP2 进行独立交叉代码审计。
-
----
-
-### 3.4 WP3：业务定制副刊（`nexus-ai-services-website`）与黑曜石终端重构
-
-- **分包角色**：`Services & Interactive Sandbox Issue Subagent`
-- **输入依赖**：WP1 产出的 `shared/*`、现网 [`nexus-ai-services-website/index.html`](file:///Users/mon3xey/projects/company/nexus-ai-services-website/index.html) 及 [`nexus-ai-services-website/app.js`](file:///Users/mon3xey/projects/company/nexus-ai-services-website/app.js)。
-- **交付文件**：
-  1. [`nexus-ai-services-website/index.html`](file:///Users/mon3xey/projects/company/nexus-ai-services-website/index.html)
-  2. [`nexus-ai-services-website/styles.css`](file:///Users/mon3xey/projects/company/nexus-ai-services-website/styles.css)
-  3. [`nexus-ai-services-website/dossiers.js`](file:///Users/mon3xey/projects/company/nexus-ai-services-website/dossiers.js)
-  4. [`nexus-ai-services-website/app.js`](file:///Users/mon3xey/projects/company/nexus-ai-services-website/app.js)
-- **详细编码任务**：
-  1. **移除 SaaS 渐变与图标库依赖**：移除 Tailwind CDN 与 FontAwesome CDN，统一接入 `../shared/industrial-magazine.css` 与 `../shared/dossier-drawer.js`。
-  2. **L1 主干与内嵌黑曜石终端沙盒重构 (`index.html` + `app.js`)**：
-     - **00 首屏与 SVG 三层桥接拓扑 (`#hero`)**：左栏展示资质铭牌、大号衬线标题、单句副标、双核切换快捷按钮与三联背书指标（`2015 创立` / `100% 无损升级` / `1对1 包教会`）；右栏采用 **纯 SVG 工程制图线框** 绘制 `Nexus-Bridge™` 三层架构（`LAYER 01 混合大模型认知基座` → `LAYER 02 智枢定制业务智能体` → `LAYER 03 实体车间与商业终端`），底部保留 `#live-log-text` 实时指令流滚动读数。
-     - **01 破局命题条 (`#bottleneck`)**：主干浓缩为一条紧凑的杂志命题横幅：「为什么 90% 的中小企业觉得 AI 落不到实际业务里？」+ 三项核心症结词条（`通用模型不懂内部数据` / `传统软件死板昂贵` / `智枢AI+业务系统深度定制`）+ `[+ 调取新旧ERP三维对比与破局档案 // SRV-01]`。
-     - **02 双核产品矩阵与实时终端沙盒 (`#products`)**：
-       - 顶部工业分卷切换 Tab（`switchProductTab('erp' | 'solo')`）：`ENGINE 01 // 企业级 AI+ERP 智能中枢` 与 `ENGINE 02 // 一人公司 AI 智能效率套件`。
-       - **左栏（5列 · 极简目录）**：展示当前引擎的一句话核心主张 + 4 条发丝线模块索引行（ERP：自然语言查账BI / AI动态排产补货 / 非标单据秒级审阅 / 100%非标业务流定制；Solo：全网获客内容工厂 / 金牌销冠客服分身 / 全自动交付跟单RPA / 第二大脑私有知识库），点击任一行打开 `srv-erp-spec` 或 `srv-solo-spec` 抽屉查看完整说明与对比表。
-       - **右栏（7列 · 主干可玩黑曜石终端 `.terminal-card`）**：参照林垚 `pweb/landing.html` 终端设计，顶部配三色状态点与终端路径（`~/nexus-bridge/erp-sandbox.sh` 或 `~/nexus-bridge/solo-matrix.sh`），下方提供 3 个预设场景按钮（完整保留 `runErpDemo(0/1/2)` 与 `runSoloDemo(0/1/2)` 的全部指令、执行步骤、指标看板与状态文本，重绘为等宽命令行输出 + 工业发丝线执行单据卡）。
-     - **工业摄影过渡带 (`.band`)**：复用 [`../nexus-ai-website/assets/precision-engineering-metrology-of-small-holes-5940488905.jpg`](file:///Users/mon3xey/projects/company/nexus-ai-website/assets/precision-engineering-metrology-of-small-holes-5940488905.jpg)，配图注 `FIG.01 // BESPOKE INDUSTRIAL DEPLOYMENT · ZERO-LOSS LEGACY UPGRADE`。
-     - **03 量身定制五步法 (`#custom-process`)**：5 行发丝线工序账本（`STEP 01 深度业务诊断` → `STEP 05 包教包会赋能与周度安全巡检`），主干仅露编号、工序名与右侧等宽交付物铭牌，点击任一行触发 `srv-process` 档案抽屉阅读完整五步实施细则。
-     - **04 ROI 价值精算横幅 (`#roi-calculator`)**：主干展示单行高对比度基准回报读数（`基准测算 [25人规模]：预计每年释放人力与运营降本价值 ¥ 892,500 · 节省无效工时 18,375 小时 · 回本周期 < 2.5 个月`）+ `[⚙ 启动交互式 ROI 测算终端 // SRV-04]` 按钮。点击后在右侧抽屉中渲染完整 3 滑块交互式 ROI 测算仪（且实时同步更新主干基准读数）。
-     - **05 实业落地案例账本 (`#cases`)**：4 行陈默/林垚式杂志案例条目（`CASE 01 非标BOM核价与AI智能排产`、`CASE 02 微信群语音/手写单自动开单`、`CASE 03 1人操盘年销千万全自动出海矩阵`、`CASE 04 工程标书/合同AI自动审拟`），主干仅展示标题、服务客户铭牌与右侧 2 个大号衬线指标（`3分钟 / +32%`、`省6人 / 99.8%`、`1人=8人 / 3.4倍`、`+210% / 85%`），点击 `[+ 调取工程复盘]` 打开 `srv-cases` 抽屉查看「原痛点 + 定制方案 + 10家实业与科研院所背书名录」。
-     - **06 预约专属定制诊断 (`#contact`)**：主干展示封底衬线标题 + 3 项免费诊断承诺简表 + 林经理专线 `159-6841-4820` + `[▶ 填写 1对1 定制诊断预约单 // SRV-06]` 按钮（呼出含 5 字段预约表单与成功回执面板的抽屉）。
-- **WP3 验收与审计门禁**：
-  - `node --check nexus-ai-services-website/dossiers.js && node --check nexus-ai-services-website/app.js` 退出码为 0。
-  - 所有单文件行数 `< 600` 行。
-  - 拉起 `MiniMax-M3` 对 WP3 进行独立交叉代码审计。
+- **涉及文件**：
+  1. `nexus-ai-website/index.html`
+  2. `nexus-ai-website/styles.css`
+  3. `nexus-ai-website/dossiers.js`
+  4. `nexus-ai-website/app.js`
+  5. `nexus-ai-website/README.md`
+- **具体开发要求**：
+  1. **00 首屏 (`#hero`) —— 极简大标题 + 全屏 AI 基建背景**：
+     - 背景层：`<img class="hero-bg-img" src="./assets/hero-ai-infrastructure.jpg" ...>` + `<canvas class="hero-field" aria-hidden="true"></canvas>`。
+     - 标题层（严格精简为 8 字主标）：
+       ```html
+       <p class="eyebrow">EST. 2015 · 国家级科技型中小企业 · 10年实业软件沉淀</p>
+       <h1 class="hero-title">
+         <span class="line">让智能，</span>
+         <span class="line">真正成为<em>生产力</em>。</span>
+       </h1>
+       <p class="hero-lead">深耕实业十载。我们打造企业级 AI+ERP 智能中枢与一人公司效能军团，让大模型在车间与商机中创造真金白银。</p>
+       ```
+     - 行动按钮：`[进入业务沙盒与定制 →]` + `[+ 展开企业总览与资质 // DOC-00]`（原位展开 `#panel-doc-overview`）。
+     - 首屏底部 **3 项关键产出指标条（`.key-metrics-strip`）**：
+       - **秒级排产 (`5s`)**：复杂工序动态重算 · 设备稼动率提升 **+28%**
+       - **24h 自动成单 (`7×24h`)**：跨时区全语种销冠响应 · 夜间询盘转化 **+300%**
+       - **旧系统零推倒 (`0中断`)**：无损挂接现有 ERP 与机床 · **100%** 保护历史数据
+  2. **01 企业愿景与文化 (`#manifesto`) —— 突出底蕴，直白表达**：
+     - 主标：**「不做浮夸的聊天玩具，只造能下车间、能赚钱的智能系统。」**
+     - 三大核心文化底色卡片（直观大白话）：
+       - `01 科技平权`：十年工业软件功底，把千亿大模型变成中小企业用得起的生产力水电煤。
+       - `02 拒绝套壳与推倒重来`：业务长什么样，AI 就怎么配；旧系统零推倒无损升级。
+       - `03 结果与收益导向`：不按代码行数自嗨，只按帮您省下多少工时、多赚多少订单说话。
+     - 底部配 `[+ 展开使命宣言与工程信仰深度档案 // DOC-01]`（原位 Toggle 展开 `#panel-doc-manifesto`，内含完整三大信仰原文与 `POLE A / POLE B` 认知桥接架构）。
+  3. **02 核心服务主展区 (`#pillars`) ——「业务场景前/后直观收益对账」**：
+     - **核心产品一：企业级 AI+ERP 智能中枢**（配图 `assets/engine-enterprise-erp.jpg`）
+       - 前/后直观收益对账表（Before vs After）：
+         - `车间排产`：人工拿 Excel 吵一上午、插单全乱 ➔ **5 秒全局智能排产，设备稼动率 +28%**
+         - `审单核价`：复杂图纸人工翻账 3 天、漏算亏本 ➔ **30 秒解析 CAD/单据精准报价，0 漏算**
+         - `库存与业财`：百万呆滞料积压、月底才算清账 ➔ **动态库存预警与业财一体，资金周转 +30%**
+         - `系统改造`：传统换 ERP 停工半年、全员抵触 ➔ **旧系统零推倒无损接入，1对1 包教包会**
+       - 触发器：`[+ 展开 ERP 技术架构与八大模块规格 // DOC-02A]`（原位 Toggle 展开 `#panel-doc-pillar-erp`）。
+     - **核心产品二：一人公司 (OPC) AI 效能军团**（配图 `assets/engine-solopreneur-matrix.jpg`）
+       - 前/后直观收益对账表（Before vs After）：
+         - `跨国接单`：半夜海外询盘熟睡漏回、大单流失 ➔ **24h 多语种销冠客服，睡梦中自动谈判收定金**
+         - `获客营销`：写文案剪视频耗尽精力、招人昂贵 ➔ **全网获客内容矩阵自动分发，1 人顶 10 人团队**
+         - `跟单履约`：报关、物流、催款一人连轴转 ➔ **全自动跟单 RPA 闭环，喝茶时全球业务自转**
+       - 触发器：`[+ 展开一人公司 7 大数字员工配置清单 // DOC-02B]`（原位 Toggle 展开 `#panel-doc-pillar-opc`）。
+  4. **02.5 独立补充叙事 (`#day-story`) ——「实业老板与超级个体真实一天」**：
+     - 作为独立补充叙事区块，顶部提供视角切换按钮：`[视角 A · 制造厂老板老张的 24h]` / `[视角 B · 出海主理人小李的 24h]`。
+     - 主干展示 3 个黄金时间节点的「接入前 vs 智枢 AI 接管后」直观时间轴；底部配 `[+ 展开老张与小李 24 小时全流程对比实录 // DOC-STORY]`（原位 Toggle 展开 `#panel-doc-story`）。
+  5. **03 演进纪元与 10 家实业背书 (`#chronicle`)**、**04 生态合作 (`#alliance`)**、**05 建立连接 (`#contact`)**：
+     - 保持清爽发丝线列表与 10 家实业/院所铭牌网格，所有 `[+ 展开...]` 按钮均在各自章节下方原位 Toggle 展开对应面板（`#panel-doc-chronicle`、`#panel-doc-clients`、`#panel-doc-alliance`、`#panel-doc-contact`）。
 
 ---
 
-### 3.5 WP4：全站端到端自动化机检套件与真实浏览器终审
+### WP3：业务定制副刊（`nexus-ai-services-website`）全屏视觉同步与原位 Toggle 化
 
-- **分包角色**：`QA Automation & Visual Verification Subagent`
-- **输入依赖**：WP1、WP2、WP3 全部交付物。
-- **交付文件**：
-  1. [`tests/verify-sites.mjs`](file:///Users/mon3xey/projects/company/tests/verify-sites.mjs)
-- **机检验收测试项（Exit Code 必须为 0）**：
-  1. **代码规模与整洁度断言**：遍历 `shared/`、`nexus-ai-website/`、`nexus-ai-services-website/` 下所有 `.html`、`.css`、`.js` 文件，断言单文件行数全部 `< 1000` 行，且不含 `TODO`、`FIXME`、未闭合标签或语法错误。
-  2. **反模式清零断言**：断言两站 HTML/CSS/JS 已完全移除 `cdn.tailwindcss.com`、`three.min.js`、`font-awesome`、`cursor: none` 以及 `#00F0FF` / `#7000FF` 赛博霓虹色值。
-  3. **内容 100% 零丢失断言**：在主刊与副刊的 HTML + `dossiers.js` 中精确检索全部核心业务实体（10 家客户全称、林经理 `159-6841-4820`、`bd@nbyiran.com`、`ir@nbyiran.com`、`浙ICP备15016619号-10`、三大信仰、两大物种、2015–2027+ 五个纪元、定制五步法、包教包会培养 1 名管理员、4 大案例痛点与方案指标）。
-  4. **运行时 DOM 与交互逻辑机检**：
-     - 验证主刊 `DOC-00` ~ `DOC-05` 共 8 个档案 ID 均可通过 `NexusUI.openDossier(id)` 正确渲染非空 HTML、更新 `aria-hidden="false"`，且 `selectIntent('战略投资洽谈 (IR)')` 正确打开 `DOC-05` 并将下拉框设为对应值。
-     - 验证副刊 `switchProductTab('erp' | 'solo')`、`runErpDemo(0..2)`、`runSoloDemo(0..2)` 正确渲染终端步骤与指标；验证打开 `SRV-04` 抽屉后 `setRoiType('sme' | 'solo')` 与 `calculateROI()` 计算结果精确（默认 25人/3.5h/8500元 产出 `892,500` 元与 `18,375` 小时）；验证 `submitConsultForm()` 正确转义 XSS 输入并展示成功回执。
-  5. **真实浏览器多视口与无障碍验证**：启动本地 HTTP 服务，在 `375px`（移动端）、`768px`（平板）、`1440px`（桌面端）视口下验证零水平溢出（`scrollWidth <= clientWidth`）、抽屉开合流畅、`prefers-reduced-motion` 静态降级生效。
-  6. **最终 `MiniMax-M3` 全站交叉审计**：由 `MiniMax-M3` 针对 WP1–WP4 全部代码与测试报告出具最终独立评审结论。
+- **涉及文件**：
+  1. `nexus-ai-services-website/index.html`
+  2. `nexus-ai-services-website/styles.css`
+  3. `nexus-ai-services-website/dossiers.js`
+  4. `nexus-ai-services-website/app.js`
+- **具体开发要求**：
+  1. **00 首屏 (`#hero`) 升级**：
+     - 同步引入全屏 AI 基建背景图（`../nexus-ai-website/assets/hero-ai-infrastructure.jpg`）与 `.hero-field` 动态光流 Canvas，右侧保留纯 SVG `Nexus-Bridge™` 三层架构拓扑图与 `#live-log-text` 实时指令流。
+     - 大标题精简为：**`让智能，真正落地每一笔订单。`**
+     - 首屏下方同步呈現 **3 项关键产出指标（秒级排产 `5s`、24h 自动成单 `7×24h`、旧系统零推倒 `0中断`）**。
+  2. **全站抽屉改为原位 Toggle 隐现面板**：
+     - `#panel-srv-bottleneck`：在 `01 破局` 下方原位展开「三大痛点深度剖析与新旧 ERP 三维对比表」。
+     - `#panel-srv-erp-spec` & `#panel-srv-solo-spec`：在 `02 双核终端沙盒` 下方原位展开「企业 AI+ERP / 一人公司 AI 套件完整模块规格与私有化安全架构」。
+     - `#panel-srv-process`：在 `03 定制五步法` 下方原位展开「五步法驻场实施细则与包教包会培养 1 名管理员承诺」。
+     - `#panel-srv-roi`：在 `04 ROI 价值测算` 下方原位展开「3 滑块交互式 ROI 精算终端」（支持实时拖动滑块计算并同步更新主干横幅读数）。
+     - `#panel-srv-cases`：在 `05 实业实录` 下方原位展开「4 大标杆案例完整痛点/方案/指标复盘与 10 家实业背书」。
+     - `#panel-srv-consult`：在 `06 预约诊断` 下方原位展开「1对1 免费上门/远程诊断预约表单」。
 
 ---
 
-## 四、 交付与验收标准（Acceptance Criteria）
+### WP4：自动化机检套件升级（`tests/verify-sites.mjs`）与独立交叉审计
 
-验收方将从以下 5 个维度对交付代码进行逐项硬性核验，任一维度不达标即打回重做：
+- **涉及文件**：`tests/verify-sites.mjs`
+- **具体开发要求**：
+  - 扩充并运行自动化验收脚本，覆盖以下 6 大测试集（全部断言必须 100% PASS，退出码为 0）：
+    1. **代码规模与整洁度**：全部 10 个核心源码文件存在且单文件 `< 1000` 行（符合各 WP 行数门禁），无 `TODO/FIXME` 占位，JS 语法编译通过，HTML 标签严格闭合。
+    2. **新纪元视觉配图与反模式清零**：验证 3 张新生成配图（`hero-ai-infrastructure.jpg`、`engine-enterprise-erp.jpg`、`engine-solopreneur-matrix.jpg`）真实存在且体积有效（`> 30KB`）；验证全屏 `.hero-field` Canvas 存在；无外部重框架与旧版赛博霓虹反模式。
+    3. **五大改进要点专项核验**：
+       - 断言主刊 8 字精简大标题 `让智能，真正成为生产力。` 与副刊精简大标题存在；
+       - 断言 **3 项关键产出指标**（`秒级排产`、`24h 自动成单`、`旧系统零推倒`）在主干清晰呈现；
+       - 断言 **业务场景前/后直观收益对账**（`.benefit-ledger`）在主刊主展区存在；
+       - 断言 **独立补充叙事「真实一天」**（`#day-story`、老张与小李 24h 时间轴及 `switchStoryRole` 切换函数）正常工作；
+       - 断言 **原位 Toggle 隐现机制**（`.toggle-panel`）已取代旧弹窗抽屉，展开时**不锁死** `body.style.overflow`。
+    4. **内容 100% 零丢失断言**：10 家客户、联系方式、ICP 备案号、三大信仰、两大物种、五个纪元、五步法、4 大案例、ROI 与沙盒数据零丢失。
+    5. **主刊运行时 DOM 与原位 Toggle 交互测试**：验证全部 9 个面板（含 `doc-story`）均可通过 `toggleDossier` / `openDossier` 原位展开（`hidden=false`, `aria-hidden="false"`, 触发器 `aria-expanded="true"`）与收起（`closeDossier` / `Esc` 键），验证 `switchStoryRole('solo'|'erp')`、表单提交与 XSS 转义。
+    6. **副刊运行时 DOM 与原位 Toggle 交互测试**：验证全部 7 个面板原位展开与收起、双核沙盒 6 个场景运行、ROI 测算器计算精度与表单提交。
 
-### 4.1 架构边界与代码规模红线
-- [ ] **目录与模块拆分到位**：必须完整交付 `shared/industrial-magazine.css`、`shared/dossier-drawer.js`、`nexus-ai-website/{index.html,styles.css,dossiers.js,app.js}`、`nexus-ai-services-website/{index.html,styles.css,dossiers.js,app.js}` 共 10 个核心源码文件。
-- [ ] **单文件行数上限**：每个 `.html`、`.css`、`.js` 业务源码文件行数必须严格 `< 1000` 行（建议控制在 `130 ~ 550` 行区间）。
-- [ ] **零语法错误与零占位实现**：所有 `.js` 文件通过 `node --check <file>` 语法编译（退出码为 `0`）；全站严禁出现 `TODO`、`FIXME`、`pass`、`...省略` 等伪实现或占位文本。
+---
 
-### 4.2 「AI 科技工业杂志」视觉与反模式清零标准
-- [ ] **色彩与排印令牌统一**：`shared/industrial-magazine.css` 必须定义并使用黑曜石深底（`--bg: #0a0c0f`）、暖骨白墨（`--ink: #eae6dc`）、工业古铜（`--bronze: #b08c5c`）、冷钢蓝（`--steel: #9fd8ff`）与 1px 发丝线（`--hairline: rgba(234,230,220,0.14)`）；正确加载 `Noto Serif SC` + `Bodoni Moda` / `Instrument Serif` + `Inter Tight` + `JetBrains Mono` 字体栈。
-- [ ] **工业杂志视觉符号齐全**：
-  - 首屏四角精密准星画框（`.hero-frame`）与章节条目十字准星标记（`.mark` `+`）。
-  - 主刊首屏动态 SVG 工业星盘/拓扑线框图；副刊首屏纯 SVG `Nexus-Bridge™` 三层桥接拓扑图。
-  - 主副刊章节间穿插窄幅暗调真实车间机床摄影带（`.band`，引用 `nexus-ai-website/assets/` 下真实工业图片并配等宽图注）。
-  - 系统原生指针保留，配合微弱暖铜跟随光晕（`.cursor-glow`）。
-- [ ] **旧版反模式 100% 清零**：
-  - 两站 HTML 中不得再残留 `cdn.tailwindcss.com`、`three.min.js`、`font-awesome`、`<canvas id="webgl-canvas">` 或 `#cursor-dot` / `#cursor-ring`。
-  - 两站 CSS 中不得出现 `cursor: none`，不得残留 `#00F0FF`（赛博青）或 `#7000FF`（霓虹紫）发光渐变与大圆角毛玻璃卡片。
+## 四、 质量红线与验收标准（Quality Gates & Acceptance Criteria）
 
-### 4.3 信息层级与右侧档案抽屉（Progressive Disclosure）验收标准
-- [ ] **L1 主干极致克制**：主刊与副刊的主页面纵向流（L1）只允许呈现章节编号、中英衬线大标题、单句核心论断、2~3 个大号统计指标、1px 发丝线目录行（`.ledger-row`）与 `[+ 调取档案]` 触发器；主干上严禁直接平铺多段长文卡片、对比大表或 5 字段表单。
-- [ ] **副刊黑曜石终端沙盒内嵌可玩**：副刊（`nexus-ai-services-website`）在 L1 主干保留可实时交互的「双引擎命令行终端沙盒（`.terminal-card`）」，支持切换 `企业级 AI+ERP` 与 `一人公司 AI 套件` 两个 Tab 及各自 3 个预设场景按钮，实时更新终端输出日志与执行单据指标。
-- [ ] **右侧工业档案抽屉（`#dossier-drawer`）交互完备**：
-  - 点击任意带有 `data-dossier="<id>"` 的行或按钮，右侧抽屉平滑滑出并渲染对应档案完整内容。
-  - 支持抽屉内「← 上一份档案 / 下一份档案 →」切换、顶部 `×` 按钮关闭、背景遮罩点击关闭、键盘 `Esc` 键关闭。
-  - 抽屉打开时锁定背景滚动并更新 `aria-hidden="false"`，关闭时恢复焦点至原触发按钮；支持 URL Hash（如 `#dossier=doc-manifesto`）直接唤醒对应档案。
-
-### 4.4 内容 100% 零丢失必检清单（L1 主干 + L2/L3 抽屉合计）
-- [ ] **品牌与资质**：`依然智枢`、`YIRAN NEXUS`、`宁波依然网络科技有限公司`、`2015` 年创立、`国家级科技型中小企业`、10年+ 生产管理与进销存系统研发、多项核心软著、备案号 `浙ICP备15016619号-10`。
-- [ ] **主刊核心模块**：三大核心信仰（`科技平权`、`拒绝标准品桎梏`、`结果导向`）及 `POLE A / POLE B` 认知桥接论述；两大智能物种（`企业级 AI+ERP 智能中枢`、`一人公司 AI 数字硅基团队`）；五大演进纪元（`2015-22`、`2023`、`2024`、`2025-26`、`2027+`）；投资与生态三栏（`万亿级存量软件重塑红利`、`产业园区与行业商协会赋能`、`大模型与硬件厂商联合方案`）。
-- [ ] **副刊核心模块**：三大落地痛点与破局对照；传统 ERP vs 智枢 AI+ERP 三维对比表；AI+ERP 四大模块与 3 个沙盒场景（含 `304不锈钢密封圈`、`M8高强螺栓`、`346,000` 逾期催收等完整数据）；一人公司四大数字员工与 3 个自动化流水线场景；量身定制五步法（`01 深度业务诊断` ~ `05 包教包会培养 1 名内部系统管理员 + 周度安全巡检`）；4 大实业落地案例（原痛点、定制方案、前后对比指标 `3分钟/+32%`、`省6人/99.8%`、`1人=8人/3.4倍`、`+210%/85%`）。
-- [ ] **10 家标杆实业与科研院所名录（两站均须完整保留）**：`佳乐股份`、`凯孚新材料`、`楚鑫材料`、`宁波艾升纸制`、`天坤建筑`、`Floravase`、`日合柑桔`、`食全食美`、`中国—中东欧国家创新合作研究中心`、`宁波海上丝绸之路研究院`。
-- [ ] **联络信息与表单**：林经理专线 `159-6841-4820`（微信同号）、商务邮箱 `bd@nbyiran.com`、投资人专线 `ir@nbyiran.com`、总部地址 `中国 · 宁波市江北区（长三角实业交付中心）`，以及主副刊两套收进抽屉的完整联络/诊断预约表单。
-
-### 4.5 核心交互函数与无障碍/响应式标准
-- [ ] **函数行为正确**：
-  - 主刊：`selectIntent(val)` 能自动呼出 `DOC-05` 联络抽屉并将意图下拉框设为 `val`；`copyText(text, btn)` 复制并回显状态；`handleFormSubmit(e)` 正常反馈。
-  - 副刊：`switchProductTab('erp' | 'solo')`、`runErpDemo(0..2)`、`runSoloDemo(0..2)` 正常切换；`SRV-04` 抽屉内的 ROI 测算仪支持 `setRoiType('sme' | 'solo')` 与 3 滑块实时联动 `calculateROI()`（默认 25人/3.5h/8500元 精确算出年省 `¥ 892,500` 与 `18,375` 小时，且同步更新主干横幅读数）；`submitConsultForm(e)` 与 `resetConsultForm()` 正常工作且通过 `escapeHtml()` 防范 XSS。
-- [ ] **多端响应式与减弱动态效果**：在 `375px`、`768px`、`1024px`、`1440px` 宽度下均无水平横向滚动条溢出；开启系统 `prefers-reduced-motion: reduce` 时所有揭示动画与滚动视差自动降级为静态最终态。
-
+1. **架构原则红线**：严格遵循“低耦合、高内聚”，共享机制收敛于 `shared/`，视图、样式、面板数据与业务控制分离，单文件行数严格低于门禁上限。
+2. **零容忍交付准则**：
+   - 严禁任何形式的偷工减料、虚假占位（`TODO`、`pass`、`...`）或删减原有业务数据。
+   - 交付时必须附上 `node tests/verify-sites.mjs` 真实机检输出（要求全部检查项 100% PASS，退出码为 0）。
+3. **MiniMax-M3 交叉审计门禁**：
+   - 每完成关键阶段及全站收尾后，必须拉起 `MiniMax-M3` 进行独立交叉代码审计，重点核查模块边界、复杂度、异常边界、幂等性与测试覆盖率，发现问题立即闭环修复。

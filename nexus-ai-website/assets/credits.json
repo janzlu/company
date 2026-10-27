@@ -1,94 +1,112 @@
 [
  {
-  "file": "nexus-ai-website/assets/workshop-lathe-machine.jpg",
+  "file": "nexus-ai-website/assets/hero-ai-infrastructure.jpg",
   "media": "image",
-  "ref": "openverse:5354fdc7-5151-4ed2-a2a5-e09ea1bea5a7",
-  "title": "Workshop lathe machine",
-  "creator": "Sunnybansodeva",
-  "creatorUrl": "https://commons.wikimedia.org/w/index.php?title=User:Sunnybansodeva&action=edit&redlink=1",
-  "date": null,
-  "license": "CC BY-SA 4.0",
-  "licenseCode": "by-sa",
-  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
-  "creditRequired": true,
-  "page": "https://commons.wikimedia.org/w/index.php?curid=88241481",
-  "via": "Wikimedia Commons",
-  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5f/Workshop_lathe_machine.jpg/1920px-Workshop_lathe_machine.jpg",
-  "width": 1920,
-  "height": 909,
-  "bytes": 436484,
-  "credit": "\"Workshop lathe machine\" by Sunnybansodeva, CC BY-SA 4.0, via Wikimedia Commons",
-  "notes": [
-   "Share-alike: an altered version (recoloured, combined with other pictures) must be shared under the same licence."
-  ],
-  "saved": "2026-10-26T22:43:31.622Z"
- },
- {
-  "file": "nexus-ai-website/assets/lathe-boring.jpg",
-  "media": "image",
-  "ref": "commons:64980188",
-  "title": "Lathe Boring",
-  "creator": "David English",
-  "creatorUrl": null,
-  "date": "2016-07-23",
-  "license": "CC BY-SA 4.0",
-  "licenseCode": "by-sa",
-  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-  "creditRequired": true,
-  "page": "https://commons.wikimedia.org/wiki/File:Lathe_Boring.jpg",
-  "via": "Wikimedia Commons",
-  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Lathe_Boring.jpg/1920px-Lathe_Boring.jpg",
-  "width": 1920,
-  "height": 1080,
-  "bytes": 546844,
-  "credit": "\"Lathe Boring\" by David English, CC BY-SA 4.0, via Wikimedia Commons",
-  "notes": [
-   "Share-alike: an altered version (recoloured, combined with other pictures) must be shared under the same licence."
-  ],
-  "saved": "2026-10-26T22:43:32.455Z"
- },
- {
-  "file": "nexus-ai-website/assets/mechanical-engineering-workshop-at-arusha-technical-college.jpg",
-  "media": "image",
-  "ref": "openverse:892a0166-b0d3-48ac-84cc-741cbb727cec",
-  "title": "Mechanical engineering workshop at Arusha Technical College, Tanzania",
-  "creator": "Hilda Raphael",
-  "creatorUrl": "https://commons.wikimedia.org/w/index.php?title=User:Hilda_Raphael&action=edit&redlink=1",
-  "date": null,
-  "license": "CC0",
-  "licenseCode": "cc0",
-  "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en/",
+  "ref": "yiran:ai-datacenter-supercomputing-cluster-v2",
+  "title": "Clean AI supercomputing GPU server cluster corridor",
+  "creator": "YIRAN NEXUS Architecture & Compute Infrastructure Team",
+  "license": "Proprietary / In-house Generative Asset",
+  "licenseCode": "proprietary",
+  "licenseUrl": "https://yiran-nexus.cn/license",
   "creditRequired": false,
-  "page": "https://commons.wikimedia.org/w/index.php?curid=190632691",
-  "via": "Wikimedia Commons",
-  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/79/Mechanical_engineering_workshop_at_Arusha_Technical_College%2C_Tanzania.jpg/1920px-Mechanical_engineering_workshop_at_Arusha_Technical_College%2C_Tanzania.jpg",
-  "width": 1920,
-  "height": 1440,
-  "bytes": 759401,
-  "credit": "\"Mechanical engineering workshop at Arusha Technical College, Tanzania\" by Hilda Raphael, CC0, via Wikimedia Commons",
-  "notes": [],
-  "saved": "2026-10-26T22:43:39.871Z"
+  "via": "YIRAN NEXUS Creative Assets",
+  "sources": [],
+  "notes": [
+   "Pristine photorealistic supercomputing cluster corridor: deep obsidian contrast field on the left, high-density server racks receding down the right corridor.",
+   "Clean baseline: zero pre-rendered fake rings or vector artifacts."
+  ],
+  "saved": "2026-10-28T02:05:00.000Z"
  },
  {
-  "file": "nexus-ai-website/assets/precision-engineering-metrology-of-small-holes-5940488905.jpg",
+  "file": "nexus-ai-website/assets/industry-manufacturing-floor.jpg",
   "media": "image",
-  "ref": "commons:51195438",
-  "title": "Precision Engineering Metrology of Small Holes (5940488905)",
-  "creator": "National Institute of Standards and Technology",
-  "creatorUrl": null,
-  "date": "2005-06-02",
-  "license": "public domain",
-  "licenseCode": "pd",
-  "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+  "ref": "yiran:industry-manufacturing-floor-v1",
+  "title": "Advanced manufacturing & intelligent CNC machining floor with AI engineer integration",
+  "creator": "YIRAN NEXUS Industrial Robotics & Digital Twin Lab",
+  "license": "Proprietary / In-house Generative Asset",
+  "licenseCode": "proprietary",
+  "licenseUrl": "https://yiran-nexus.cn/license",
   "creditRequired": false,
-  "page": "https://commons.wikimedia.org/wiki/File:Precision_Engineering_Metrology_of_Small_Holes_(5940488905).jpg",
-  "via": "Wikimedia Commons",
-  "image": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Precision_Engineering_Metrology_of_Small_Holes_%285940488905%29.jpg",
-  "width": 1133,
-  "height": 850,
-  "bytes": 298817,
-  "credit": "\"Precision Engineering Metrology of Small Holes (5940488905)\" by National Institute of Standards and Technology, public domain, via Wikimedia Commons",
-  "notes": [],
-  "saved": "2026-10-26T22:44:12.700Z"
+  "via": "YIRAN NEXUS Creative Assets",
+  "sources": [],
+  "notes": [
+   "Sector: Advanced Manufacturing & Heavy Machinery.",
+   "Features: Industrial engineer in foreground holding ruggedized tablet with real-time AI scheduling data, rows of 5-axis CNC machining centers, pristine dark obsidian reflective floor."
+  ],
+  "saved": "2026-10-28T03:50:00.000Z"
+ },
+ {
+  "file": "nexus-ai-website/assets/industry-logistics-supply-chain.jpg",
+  "media": "image",
+  "ref": "yiran:industry-logistics-supply-chain-v1",
+  "title": "Modern trade & global supply chain automated logistics warehouse hub",
+  "creator": "YIRAN NEXUS Industrial Robotics & Digital Twin Lab",
+  "license": "Proprietary / In-house Generative Asset",
+  "licenseCode": "proprietary",
+  "licenseUrl": "https://yiran-nexus.cn/license",
+  "creditRequired": false,
+  "via": "YIRAN NEXUS Creative Assets",
+  "sources": [],
+  "notes": [
+   "Sector: Modern Trade, Global Distribution & E-Commerce Supply Chain.",
+   "Features: Automated high-bay racking aisles, high-speed stacker cranes, AGVs dispatching standardized pallet inventory with laser guidance lights."
+  ],
+  "saved": "2026-10-28T03:50:00.000Z"
+ },
+ {
+  "file": "nexus-ai-website/assets/industry-multi-sector-operations.jpg",
+  "media": "image",
+  "ref": "yiran:industry-multi-sector-operations-v1",
+  "title": "Multi-industry operations command center for healthcare, retail and professional services",
+  "creator": "YIRAN NEXUS Industrial Calibration & Metrology Lab",
+  "license": "Proprietary / In-house Generative Asset",
+  "licenseCode": "proprietary",
+  "licenseUrl": "https://yiran-nexus.cn/license",
+  "creditRequired": false,
+  "via": "YIRAN NEXUS Creative Assets",
+  "sources": [],
+  "notes": [
+   "Sector: Healthcare, Omni-channel Retail & Professional Enterprise Services.",
+   "Features: Business analysts in dark modern operations control room evaluating multi-screen real-time ERP analytics, healthcare supply telemetry, and cross-channel ledger charts."
+  ],
+  "saved": "2026-10-28T03:50:00.000Z"
+ },
+ {
+  "file": "nexus-ai-website/assets/engine-enterprise-erp.jpg",
+  "media": "image",
+  "ref": "unsplash:1567789884554-0b844b597180",
+  "title": "Enterprise AI+ERP scheduling core (original composite)",
+  "creator": "Unsplash contributor; composite by YIRAN NEXUS",
+  "license": "Unsplash License",
+  "licenseCode": "unsplash",
+  "licenseUrl": "https://unsplash.com/license",
+  "creditRequired": false,
+  "via": "Unsplash",
+  "sources": [
+   "https://images.unsplash.com/photo-1567789884554-0b844b597180"
+  ],
+  "notes": [
+   "Original composite: industrial robot assembly line with original BOM topology, scheduling rail and data-flow overlay artwork."
+  ],
+  "saved": "2026-10-27T21:48:00.000Z"
+ },
+ {
+  "file": "nexus-ai-website/assets/engine-solopreneur-matrix.jpg",
+  "media": "image",
+  "ref": "unsplash:1451187580459-43490279c0fa",
+  "title": "Solo operator AI matrix (original composite)",
+  "creator": "Unsplash contributor; composite by YIRAN NEXUS",
+  "license": "Unsplash License",
+  "licenseCode": "unsplash",
+  "licenseUrl": "https://unsplash.com/license",
+  "creditRequired": false,
+  "via": "Unsplash",
+  "sources": [
+   "https://images.unsplash.com/photo-1451187580459-43490279c0fa"
+  ],
+  "notes": [
+   "Original composite: Earth-at-night source photography with original wireframe operator, seven agent rings, order-flow and revenue-growth artwork."
+  ],
+  "saved": "2026-10-27T21:48:00.000Z"
  }
 ]

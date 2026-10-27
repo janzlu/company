@@ -8,7 +8,7 @@
   function actions(links) {
     return '<div class="dossier-actions">' + links.map(function (link) {
       if (link.href) return '<a class="btn btn-line" href="' + link.href + '">' + link.label + '</a>';
-      if (link.dossier) return '<button type="button" class="btn btn-line" data-dossier="' + link.dossier + '" aria-haspopup="dialog">' + link.label + '</button>';
+      if (link.dossier) return '<button type="button" class="btn btn-line" data-toggle="' + link.dossier + '" data-dossier="' + link.dossier + '" aria-expanded="false" aria-controls="panel-' + link.dossier + '">' + link.label + '</button>';
       return '<span class="dossier-badge">' + link.label + '</span>';
     }).join('') + '</div>';
   }
@@ -217,7 +217,7 @@
           '</div>' +
           '<p class="roi-recommendation"><span class="k">智枢为您匹配的定制方案建议：</span><span id="roi-recommendation">【企业级 AI+ERP 智能中枢定制版】重点打通智能审单入库、车间动态排产与业财自动化核算，支持与现有系统无缝对接。</span></p>' +
           '<p class="roi-footnote">测算口径：年度节省工时 = 人数 × 人均每日重复工时 × 250 个工作日 × 84% AI 可替代率；年度价值 = 节省工时 × 综合时薪（月薪 ÷ 175 小时）。结果为估算值，最终以业务诊断报告为准。</p>' +
-          '<div class="dossier-actions"><button type="button" class="btn btn-primary" data-dossier="srv-consult" aria-haspopup="dialog">获取我司专属《AI定制方案与报价清单》 →</button></div>' +
+          '<div class="dossier-actions"><button type="button" class="btn btn-primary" data-toggle="srv-consult" data-dossier="srv-consult" aria-expanded="false" aria-controls="panel-srv-consult">获取我司专属《AI定制方案与报价清单》 →</button></div>' +
           '</div>' +
           '<p class="dossier-note">ROI SIMULATOR // 25人 / 3.5h / ¥8,500 基准读数：¥ 892,500 · 18,375 小时 · &lt; 2.5 个月</p>';
       },
@@ -303,8 +303,8 @@
           '<h3>FORM // 1对1 定制诊断预约单</h3>' +
           '<form id="consult-form">' +
           '<div class="field-row">' +
-          '<div class="field"><label for="form-name">您的称呼 *</label><input id="form-name" name="name" type="text" required placeholder="例如：张总 / 李主理人"></div>' +
-          '<div class="field"><label for="form-phone">联系电话 / 微信 *</label><input id="form-phone" name="phone" type="text" required placeholder="用于接收定制方案与演示预约"></div>' +
+          '<div class="field"><label for="form-name">您的称呼 *</label><input id="form-name" name="name" type="text" required autocomplete="name" placeholder="例如：张总 / 李主理人"></div>' +
+          '<div class="field"><label for="form-phone">联系电话 / 微信 *</label><input id="form-phone" name="phone" type="text" required autocomplete="tel" placeholder="用于接收定制方案与演示预约"></div>' +
           '</div>' +
           '<div class="field-row">' +
           '<div class="field"><label for="form-product">您关注的定制方向 *</label><select id="form-product" name="product">' +
