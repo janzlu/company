@@ -28,7 +28,7 @@ main, .site-foot { position: relative; z-index: 1; }
 
 /* ------------------------------------------------------------------- hero */
 .brand-hero .hero-inner { max-width: 1000px; }
-.brand-hero .hero-title { max-width: 13ch; }
+.brand-hero .hero-title { max-width: 16ch; }
 .brand-hero .hero-ctas { align-items: stretch; }
 .brand-hero .hero-ctas .btn,
 .brand-hero .hero-ctas .btn-toggle { min-height: 48px; }
@@ -106,7 +106,7 @@ main, .site-foot { position: relative; z-index: 1; }
 
 /* -------------------------------------------------------------- responsive */
 @media (max-width: 1100px) {
-  .brand-hero .hero-title { max-width: 14ch; }
+  .brand-hero .hero-title { max-width: 16ch; }
 }
 @media (max-width: 900px) {
   .hero-issue { display: none; }

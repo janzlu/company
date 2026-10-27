@@ -1,6 +1,6 @@
 # YIRAN NEXUS · 依然智枢
 
-> **让智能，真正成为生产力。**  
+> **AI智能，真正落地成为生产力。**  
 > 宁波依然网络科技有限公司（旗下产业 AI 品牌：依然智枢 · YIRAN NEXUS）官方网站系统。
 
 ---
@@ -16,7 +16,10 @@ company/
 │   ├── index.html                # 主刊页面结构（L1 核心视觉主干）
 │   ├── styles.css                # 主刊专属版式与首屏全景合成
 │   ├── dossiers.js               # DOC-00 → DOC-05 及 DOC-STORY 原位面板库
-│   ├── app.js                    # 主刊运行时：时钟、双视角时间轴、意向路由、表单
+│   ├── app.js                    # 主刊运行时：双视角时间轴、意向路由、表单
+│   ├── en/                       # 英文全球商务旗舰版（Executive Edition 单页）
+│   │   ├── index.html            # 英文单页主干与商务直联通道
+│   │   └── app.js                # 英文版全屏光流与音频控制交互
 │   ├── README.md                 # 主刊详细开发与内容维护指南
 │   └── assets/                   # 新纪元 AI 基建大图、穿梭视频与物种引擎配图
 ├── nexus-ai-services-website/    # 业务副刊：双核沙盒、ROI 实时测算机与方案库
@@ -25,11 +28,12 @@ company/
 │   ├── dossiers.js               # SRV-01 → SRV-07 原位工程方案与案例复盘库
 │   └── app.js                    # 双核交互沙盒切换、ROI 动态测算模型、诊断通道
 ├── shared/                       # 共享设计系统与核心运行时
-│   ├── industrial-magazine.css   # 全局设计令牌、排版、组件库与暗黑工业调色盘
+│   ├── industrial-magazine.css   # 全局设计令牌、排版、组件库与暗黑工业调色盘（含头尾通栏规范）
 │   ├── dossier-drawer.js         # 原位 Toggle 状态机、光流 Canvas 引擎与深链驱动
+│   ├── mobile-nav.js             # 移动端全站通用导航抽屉控制器（双向互斥、无障碍与热键支持）
 │   └── favicon.svg               # 智枢全局矢量徽标
 ├── tests/
-│   └── verify-sites.mjs          # 203 项自动化端到端验收测试套件
+│   └── verify-sites.mjs          # 270 项自动化端到端验收测试套件
 └── package.json                  # 项目配置与测试入口
 ```
 
@@ -70,7 +74,7 @@ npx serve -l 4321 .
 
 ### 2. 自动化验收测试
 
-仓库内置 203 项无头 JSDOM 自动化验收测试，覆盖代码行数硬红线、状态机契约、无障碍 ARIA、深链、交互与反模式清零：
+仓库内置 270 项无头 JSDOM 自动化验收测试，覆盖代码行数硬红线、状态机契约、头尾通栏规范、移动端导航互斥、英文版全要素、无障碍 ARIA、深链、交互与反模式清零：
 
 ```bash
 # 运行完整测试套件

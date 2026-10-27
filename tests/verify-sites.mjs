@@ -285,6 +285,10 @@ check('原位 Toggle 面板 · 文档流内展开，非 fixed 抽屉',
 check('原位 Toggle 面板 · [hidden] 不占位',
   /\.toggle-panel\[hidden\]\s*\{[^}]*display\s*:\s*none/.test(sharedCss));
 
+check('头尾通栏全屏规范 · site-head 与 site-foot wrap 解除定宽且设为 100%',
+  /\.site-head\s+\.wrap\s*\{[^}]*max-width\s*:\s*100%/.test(sharedCss) &&
+  /\.site-foot\s+\.wrap\s*\{[^}]*max-width\s*:\s*100%/.test(sharedCss));
+
 check('两刊 reduced-motion 静态降级覆盖共享层与分刊 CSS',
   sharedCss.includes('prefers-reduced-motion') && brandCss.includes('prefers-reduced-motion') &&
   servicesCss.includes('prefers-reduced-motion'));
@@ -297,7 +301,7 @@ const servicesStatic = parseDoc('nexus-ai-services-website/index.html');
 
 const brandH1 = normalizeText(brandStatic.querySelector('.hero-title') && brandStatic.querySelector('.hero-title').textContent);
 const servicesH1 = normalizeText(servicesStatic.querySelector('.hero-title') && servicesStatic.querySelector('.hero-title').textContent);
-check('主刊精简大标题 · 让智能，真正成为生产力。', brandH1 === '让智能，真正成为生产力。', brandH1);
+check('主刊精简大标题 · AI智能，真正落地成为生产力。', brandH1 === 'AI智能，真正落地成为生产力。', brandH1);
 check('副刊精简大标题 · 让智能，真正落地每一笔订单。', servicesH1 === '让智能，真正落地每一笔订单。', servicesH1);
 
 function metricPairs(doc) {
@@ -866,6 +870,10 @@ if (brandReady) {
   }
 
   checkMobileNav(bw, '主刊', '../nexus-ai-services-website/index.html');
+  check('主刊顶部已彻底去除实时时钟节点与 UTC 显示',
+    bw.document.getElementById('live-clock') === null &&
+    !bw.document.querySelector('.site-head .clock') &&
+    !/\bUTC\b/i.test(bw.document.querySelector('.site-head').textContent));
 
   check('主刊运行时无异常', brand.errors.length === 0, brand.errors.join('; '));
 }
@@ -1034,9 +1042,10 @@ if (servicesReady) {
 
   check('副刊终端实时指令流非空',
     (sw.document.getElementById('live-log-text').textContent || '').trim().length > 10);
-  check('副刊 UTC+8 实时时钟已启动',
-    /^UTC\+8 \d{2}:\d{2}:\d{2}$/.test((sw.document.getElementById('live-clock').textContent || '').trim()),
-    (sw.document.getElementById('live-clock').textContent || '').trim());
+  check('副刊顶部已彻底去除实时时钟节点与 UTC 显示',
+    sw.document.getElementById('live-clock') === null &&
+    !sw.document.querySelector('.site-head .clock') &&
+    !/\bUTC\b/i.test(sw.document.querySelector('.site-head').textContent));
 
   checkMobileNav(sw, '副刊', '../nexus-ai-website/index.html');
 
@@ -1086,8 +1095,10 @@ const ew = enApp.win;
 if (ew) {
   check('英文版全屏光流 Canvas 唯一实例且已绘制',
     ew.document.querySelectorAll('.hero-field').length === 1 && enApp.canvasStats.frames > 0);
-  check('英文版双时区时钟运行 · UTC / UTC+8',
-    /UTC \d{2}:\d{2}:\d{2} · UTC\+8 \d{2}:\d{2}:\d{2}/.test((ew.document.getElementById('live-clock').textContent || '').trim()));
+  check('英文版顶部已彻底去除实时时钟节点与 UTC 显示',
+    ew.document.getElementById('live-clock') === null &&
+    !ew.document.querySelector('.site-head .clock') &&
+    !/\bUTC\b/i.test(ew.document.querySelector('.site-head').textContent));
 
   const audioBtn = ew.document.getElementById('hero-audio-btn');
   const video = ew.document.querySelector('.hero-bg-video');
