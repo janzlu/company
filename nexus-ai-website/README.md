@@ -10,6 +10,9 @@ nexus-ai-website/
 ├── styles.css      本刊专属样式：全屏 Hero 合成、双物种配图、真实一天时间轴与响应式
 ├── dossiers.js     DOC-00 → DOC-05 + DOC-STORY 原位面板库（完整保留原站全部企业文案与联络表单）
 ├── app.js          UTC+8 时钟、真实一天视角切换、意向路由、联络表单、复制交互
+├── en/             英文精简版（Executive Summary 单页）
+│   ├── index.html  英文版：00 首屏 / 01 使命 / 02 指标 / 03 双引擎 / 04 商务直联名片
+│   └── app.js      双时区时钟（UTC & UTC+8）、音频控制与全屏光流
 ├── README.md       本文件
 └── assets/         工业摄影图版（FIG.01）、新纪元 AI 基建大图（静态海报图）与首屏 14s 沉浸式视频背景板（hero-ai-drone-cluster.mp4）以及两份引擎配图
 ```
@@ -18,6 +21,7 @@ nexus-ai-website/
 
 - `../shared/industrial-magazine.css`：设计令牌、全屏 Hero、3 项指标条、前后收益对账、24h 时间轴、原位 Toggle 面板、表单与 ROI 组件。
 - `../shared/dossier-drawer.js`：`window.NexusUI` 原位 Toggle 状态机（`toggleDossier` / `openDossier` / `closeDossier` / `stepDossier`）、全屏光流 Canvas（`initHeroCanvas`）、Esc 收起、`#dossier=xxx` 深链、HTML 转义与剪贴板工具。
+- `../shared/mobile-nav.js`：`window.NexusMobileNav` 移动端全站通用导航抽屉控制器（双向互斥、多语言自适应、ESC/外部空白收起与生命周期管理）。
 
 无构建步骤、无框架运行时依赖。字体通过 Google Fonts 加载，其余均为原生 HTML/CSS/JS。
 

@@ -13,24 +13,26 @@
 </head>
 <body class="services-issue">
 
-  <header class="site-head">
+  <header class="site-head" id="site-head">
     <div class="wrap">
       <a class="brand" href="#hero" aria-label="依然智枢定制副刊 · 返回首屏">
         <span class="brand-cn">依然智枢</span>
         <span class="brand-latin">YIRAN NEXUS</span>
         <span class="brand-est">定制副刊 · SPECIAL ISSUE</span>
       </a>
-      <nav class="head-nav" aria-label="副刊章节索引">
+      <nav class="head-nav" id="site-nav" aria-label="副刊章节索引">
         <a href="#bottleneck"><span class="num">01</span>破局</a>
         <a href="#products"><span class="num">02</span>双核沙盒</a>
         <a href="#custom-process"><span class="num">03</span>五步法</a>
         <a href="#roi-calculator"><span class="num">04</span>价值测算</a>
         <a href="#cases"><span class="num">05</span>实业实录</a>
+        <a class="head-nav-extra" href="../nexus-ai-website/index.html"><span>← 返回品牌主刊</span><span class="ext-tag">主刊 ↗</span></a>
       </nav>
       <div class="head-actions">
-        <a class="head-link" href="../nexus-ai-website/index.html">← 返回品牌主刊</a>
+        <a class="head-link is-secondary" href="../nexus-ai-website/index.html">← 返回品牌主刊</a>
         <span class="clock" id="live-clock">UTC+8 --:--:--</span>
         <button type="button" class="btn btn-primary" data-toggle="srv-consult" data-dossier="srv-consult" aria-expanded="false" aria-controls="panel-srv-consult">预约 1对1 诊断</button>
+        <button type="button" class="head-menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="切换副刊菜单"><span class="hamburger" aria-hidden="true"><span></span><span></span><span></span></span><span class="menu-label">目录</span></button>
       </div>
     </div>
   </header>
@@ -465,6 +467,7 @@
   </footer>
 
   <script src="../shared/dossier-drawer.js"></script>
+  <script src="../shared/mobile-nav.js"></script>
   <script src="./dossiers.js"></script>
   <script src="./app.js"></script>
 </body>

@@ -6,32 +6,38 @@
   <title>依然智枢 · YIRAN NEXUS | 让智能，真正成为生产力。</title>
   <meta name="description" content="依然智枢（YIRAN NEXUS）是宁波依然网络科技有限公司旗下产业智能品牌。国家级科技型中小企业，自 2015 年起深耕生产管理、进销存系统研发，以企业级 AI+ERP 智能中枢与一人公司 AI 数字硅基团队，打通大模型与实体生产的最后一公里。">
   <link rel="icon" href="../shared/favicon.svg" type="image/svg+xml">
+  <link rel="alternate" hreflang="zh-CN" href="./index.html">
+  <link rel="alternate" hreflang="en" href="./en/index.html">
+  <link rel="alternate" hreflang="x-default" href="./index.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body class="brand-issue">
-
-  <header class="site-head">
+  <header class="site-head" id="site-head">
     <div class="wrap">
       <a class="brand" href="#hero" aria-label="依然智枢 · 返回首屏">
         <span class="brand-cn">依然智枢</span>
         <span class="brand-latin">YIRAN NEXUS</span>
         <span class="brand-est">EST. 2015 · 宁波依然网络</span>
       </a>
-      <nav class="head-nav" aria-label="主刊章节索引">
+      <nav class="head-nav" id="site-nav" aria-label="主刊章节索引">
         <a href="#manifesto"><span class="num">01</span>使命</a>
         <a href="#pillars"><span class="num">02</span>基石</a>
         <a href="#day-story"><span class="num">02.5</span>一天</a>
         <a href="#chronicle"><span class="num">03</span>纪元</a>
         <a href="#alliance"><span class="num">04</span>生态</a>
         <a href="#contact"><span class="num">05</span>连接</a>
+        <a class="head-nav-extra" href="../nexus-ai-services-website/index.html"><span>业务沙盒与定制副刊</span><span class="ext-tag">副刊 ↗</span></a>
+        <a class="head-nav-extra" href="./en/index.html" hreflang="en"><span>English Executive Edition</span><span class="ext-tag">EN ↗</span></a>
       </nav>
       <div class="head-actions">
         <a class="head-link is-secondary" href="../nexus-ai-services-website/index.html">业务沙盒与定制副刊 ↗</a>
+        <a class="head-link" href="./en/index.html" hreflang="en" aria-label="Switch to English Edition">EN</a>
         <span class="clock" id="live-clock">UTC+8 --:--:--</span>
         <button type="button" class="btn btn-line" data-toggle="doc-contact" data-dossier="doc-contact" aria-expanded="false" aria-controls="panel-doc-contact">发起联络</button>
+        <button type="button" class="head-menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="切换主菜单"><span class="hamburger" aria-hidden="true"><span></span><span></span><span></span></span><span class="menu-label">目录</span></button>
       </div>
     </div>
   </header>
@@ -485,6 +491,7 @@
   </footer>
 
   <script src="../shared/dossier-drawer.js"></script>
+  <script src="../shared/mobile-nav.js"></script>
   <script src="./dossiers.js"></script>
   <script src="./app.js"></script>
 </body>

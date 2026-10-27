@@ -60,11 +60,14 @@ function parseDoc(rel) {
 const REQUIRED_FILES = [
   'shared/industrial-magazine.css',
   'shared/dossier-drawer.js',
+  'shared/mobile-nav.js',
   'nexus-ai-website/index.html',
   'nexus-ai-website/styles.css',
   'nexus-ai-website/dossiers.js',
   'nexus-ai-website/app.js',
   'nexus-ai-website/README.md',
+  'nexus-ai-website/en/index.html',
+  'nexus-ai-website/en/app.js',
   'nexus-ai-services-website/index.html',
   'nexus-ai-services-website/styles.css',
   'nexus-ai-services-website/dossiers.js',
@@ -74,10 +77,13 @@ const REQUIRED_FILES = [
 const LINE_GATES = {
   'shared/industrial-magazine.css': 500,
   'shared/dossier-drawer.js': 500,
+  'shared/mobile-nav.js': 200,
   'nexus-ai-website/index.html': 500,
   'nexus-ai-website/styles.css': 400,
   'nexus-ai-website/dossiers.js': 500,
   'nexus-ai-website/app.js': 350,
+  'nexus-ai-website/en/index.html': 400,
+  'nexus-ai-website/en/app.js': 250,
   'nexus-ai-services-website/index.html': 600,
   'nexus-ai-services-website/styles.css': 450,
   'nexus-ai-services-website/dossiers.js': 600,
@@ -192,7 +198,7 @@ function findTagIssues(html) {
   return issues;
 }
 
-for (const rel of ['nexus-ai-website/index.html', 'nexus-ai-services-website/index.html']) {
+for (const rel of ['nexus-ai-website/index.html', 'nexus-ai-website/en/index.html', 'nexus-ai-services-website/index.html']) {
   const issues = findTagIssues(read(rel));
   check(`HTML 标签闭合 · ${rel}`, issues.length === 0, issues.slice(0, 4).join('; '));
 }
@@ -514,6 +520,8 @@ function boot(relHtml, scriptFiles, options = {}) {
   win.Element.prototype.scrollIntoView = function () {};
   win.scrollTo = function () {};
   win.HTMLCanvasElement.prototype.getContext = function () { return makeCanvasContext(canvasStats); };
+  win.HTMLMediaElement.prototype.play = function () { return Promise.resolve(); };
+  win.HTMLMediaElement.prototype.pause = function () {};
 
   try {
     for (const rel of scriptFiles) win.eval(fs.readFileSync(path.join(ROOT, rel), 'utf8'));
@@ -582,8 +590,118 @@ function checkToggleRoundTrip(win, ids, label) {
   }
 }
 
-const BRAND_SCRIPTS = ['shared/dossier-drawer.js', 'nexus-ai-website/dossiers.js', 'nexus-ai-website/app.js'];
-const SERVICE_SCRIPTS = ['shared/dossier-drawer.js', 'nexus-ai-services-website/dossiers.js', 'nexus-ai-services-website/app.js'];
+function checkMobileNav(win, label, expectedExtraHref) {
+  const doc = win.document;
+  const toggle = doc.getElementById('menu-toggle');
+  const nav = doc.getElementById('site-nav');
+  const head = doc.getElementById('site-head');
+
+  check(`${label}移动端主菜单 · 切换按钮与 ARIA 契约挂载`,
+    Boolean(toggle && nav && head && toggle.getAttribute('aria-expanded') === 'false' &&
+      toggle.getAttribute('aria-controls') === 'site-nav' &&
+      toggle.getAttribute('aria-label') && toggle.querySelector('.hamburger')));
+
+  if (!toggle || !nav || !head) return;
+
+  // 1. Initial click to open
+  toggle.click();
+  check(`${label}移动端主菜单 · 点击展开与头部状态同步`,
+    toggle.getAttribute('aria-expanded') === 'true' &&
+    head.classList.contains('nav-open') &&
+    nav.classList.contains('is-open') &&
+    (toggle.textContent.includes('关闭') || toggle.textContent.includes('Close')) &&
+    win.NexusMobileNav.isOpen() === true);
+
+  // 2. Direct toggle re-click to close
+  toggle.click();
+  check(`${label}移动端主菜单 · 展开时直接再次点击触发器收起`,
+    toggle.getAttribute('aria-expanded') === 'false' &&
+    !head.classList.contains('nav-open') &&
+    !nav.classList.contains('is-open') &&
+    (toggle.textContent.includes('目录') || toggle.textContent.includes('Menu')) &&
+    win.NexusMobileNav.isOpen() === false);
+
+  // 3. Re-open and click outside (document) to close
+  toggle.click();
+  doc.dispatchEvent(new win.MouseEvent('click', { bubbles: true }));
+  check(`${label}移动端主菜单 · 点击外部空白区域自动收起`,
+    toggle.getAttribute('aria-expanded') === 'false' &&
+    !head.classList.contains('nav-open') &&
+    !nav.classList.contains('is-open'));
+
+  // 4. Re-open and click menu link to close
+  toggle.click();
+  const firstLink = nav.querySelector('a:not(.head-nav-extra)');
+  if (firstLink) firstLink.click();
+  check(`${label}移动端主菜单 · 点击菜单链接后自动收起`,
+    toggle.getAttribute('aria-expanded') === 'false' &&
+    !head.classList.contains('nav-open') &&
+    !nav.classList.contains('is-open'));
+
+  // 5. Re-open and focus a menu link, then ESC to verify focus returns to toggle
+  toggle.click();
+  const menuLink = nav.querySelector('a:not(.head-nav-extra)');
+  if (menuLink && typeof menuLink.focus === 'function') {
+    menuLink.focus();
+    check(`${label}移动端主菜单 · ESC前置焦点置于菜单内部`, doc.activeElement === menuLink);
+    menuLink.dispatchEvent(new win.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    check(`${label}移动端主菜单 · 菜单内部按ESC收起且焦点归还触发器`,
+      toggle.getAttribute('aria-expanded') === 'false' &&
+      !head.classList.contains('nav-open') &&
+      doc.activeElement === toggle);
+  }
+
+  // 6. Real mutual exclusion test: open mobile nav -> click real dossier trigger -> verify panel opened and nav closed
+  const realTrigger = doc.querySelector('[data-toggle], [data-dossier]');
+  if (realTrigger) {
+    toggle.click(); // open menu first
+    const triggerId = realTrigger.getAttribute('data-toggle') || realTrigger.getAttribute('data-dossier');
+    realTrigger.click();
+    const panel = doc.getElementById('panel-' + triggerId) || doc.querySelector('[data-toggle-panel="' + triggerId + '"]');
+    check(`${label}移动端主菜单 · 点击真实档案触发器后档案已展开且菜单自动收起`,
+      toggle.getAttribute('aria-expanded') === 'false' &&
+      !head.classList.contains('nav-open') &&
+      win.NexusMobileNav.isOpen() === false &&
+      Boolean(panel && panel.hidden === false && !panel.hasAttribute('hidden')));
+
+    // Bidirectional check: with panel open, clicking menu toggle must close panel and open menu
+    toggle.click();
+    check(`${label}移动端主菜单 · 档案展开态下点击菜单触发器双向互斥关闭档案`,
+      Boolean(panel && panel.hidden === true) &&
+      toggle.getAttribute('aria-expanded') === 'true' &&
+      win.NexusMobileNav.isOpen() === true);
+
+    toggle.click(); // restore closed
+  }
+
+  // 7. Cross-site navigation link verification
+  const extraLink = nav.querySelector('.head-nav-extra');
+  check(`${label}移动端主菜单 · 跨刊入口路径匹配目标`,
+    Boolean(extraLink && extraLink.getAttribute('href') === expectedExtraHref),
+    extraLink ? extraLink.getAttribute('href') : 'none');
+
+  // 8. Idempotency test: repeated init does not double-bind listeners
+  const reinitResult = win.NexusMobileNav.init();
+  check(`${label}移动端主菜单 · 重复初始化返回已就绪状态`, reinitResult === true);
+  toggle.click();
+  check(`${label}移动端主菜单 · 重复初始化后单次点击只触发一次展开`,
+    toggle.getAttribute('aria-expanded') === 'true' &&
+    head.classList.contains('nav-open'));
+  toggle.click(); // restore closed state
+
+  // 9. Teardown test: destroy cleanly closes and unbinds
+  win.NexusMobileNav.setOpen(true);
+  const destroyed = win.NexusMobileNav.destroy();
+  check(`${label}移动端主菜单 · destroy 卸载重置且注销监听`,
+    destroyed === true &&
+    toggle.getAttribute('aria-expanded') === 'false' &&
+    !head.classList.contains('nav-open') &&
+    win.NexusMobileNav.isOpen() === false);
+  win.NexusMobileNav.init(); // re-init to restore normal operations
+}
+
+const BRAND_SCRIPTS = ['shared/dossier-drawer.js', 'shared/mobile-nav.js', 'nexus-ai-website/dossiers.js', 'nexus-ai-website/app.js'];
+const SERVICE_SCRIPTS = ['shared/dossier-drawer.js', 'shared/mobile-nav.js', 'nexus-ai-services-website/dossiers.js', 'nexus-ai-services-website/app.js'];
 
 /* -------------------------------------------------------------- brand run */
 section('5. 主刊运行时 DOM 与交互');
@@ -746,6 +864,8 @@ if (brandReady) {
     check('主刊全屏大图 · ESC 键缩回',
       Boolean(ov && !ov.classList.contains('is-active') && !testFig.classList.contains('is-zoomed-origin')));
   }
+
+  checkMobileNav(bw, '主刊', '../nexus-ai-services-website/index.html');
 
   check('主刊运行时无异常', brand.errors.length === 0, brand.errors.join('; '));
 }
@@ -917,6 +1037,9 @@ if (servicesReady) {
   check('副刊 UTC+8 实时时钟已启动',
     /^UTC\+8 \d{2}:\d{2}:\d{2}$/.test((sw.document.getElementById('live-clock').textContent || '').trim()),
     (sw.document.getElementById('live-clock').textContent || '').trim());
+
+  checkMobileNav(sw, '副刊', '../nexus-ai-website/index.html');
+
   check('副刊运行时无异常', services.errors.length === 0, services.errors.join('; '));
 }
 
@@ -929,6 +1052,81 @@ check('副刊 #dossier 深链自动展开 SRV-04',
   panelSnapshot(deepServices.win, 'srv-roi').aria === 'false',
   deepServices.errors.join('; '));
 deepServices.win.close();
+
+/* ------------------------------------------------------------- en edition */
+section('7. 英文版 (Executive Edition) 规范与交互');
+
+const enHtml = read('nexus-ai-website/en/index.html');
+const enDoc = parseDoc('nexus-ai-website/en/index.html');
+
+check('英文版 HTML 根语言标签 · lang="en"', enDoc.documentElement.getAttribute('lang') === 'en');
+check('英文版双向 hreflang 声明',
+  Boolean(enDoc.querySelector('link[hreflang="zh-CN"]')) &&
+  Boolean(enDoc.querySelector('link[hreflang="en"]')));
+check('主刊存在指向英文版的直达入口',
+  Boolean(parseDoc('nexus-ai-website/index.html').querySelector('a[href="./en/index.html"]')));
+check('英文版存在返回中文主刊的直达入口',
+  Boolean(enDoc.querySelector('a[href="../index.html"]')));
+check('英文版首屏包含大图与背景视频',
+  Boolean(enDoc.querySelector('.hero-bg-img')) &&
+  Boolean(enDoc.querySelector('.hero-bg-video')));
+check('英文版 Slogan 采用智能体语境 · Autonomous Silicon Workforce',
+  enHtml.includes('Autonomous Silicon') && enHtml.includes('Industrial Intelligence'));
+check('英文版三项核心指标 · 5s / 7×24h / 0 Break',
+  enHtml.includes('5s') && enHtml.includes('7&times;24h') && enHtml.includes('0 Break'));
+check('英文版双引擎物种覆盖 · Enterprise AI+ERP & Solopreneur Matrix',
+  enHtml.includes('Enterprise AI+ERP') && enHtml.includes('Solopreneur AI Matrix'));
+check('英文版商务名片矩阵 · bd / ir / phone',
+  enHtml.includes('bd@nbyiran.com') && enHtml.includes('ir@nbyiran.com') && enHtml.includes('+86 159-6841-4820'));
+
+const EN_SCRIPTS = ['shared/dossier-drawer.js', 'shared/mobile-nav.js', 'nexus-ai-website/en/app.js'];
+const enApp = boot('nexus-ai-website/en/index.html', EN_SCRIPTS);
+const ew = enApp.win;
+
+if (ew) {
+  check('英文版全屏光流 Canvas 唯一实例且已绘制',
+    ew.document.querySelectorAll('.hero-field').length === 1 && enApp.canvasStats.frames > 0);
+  check('英文版双时区时钟运行 · UTC / UTC+8',
+    /UTC \d{2}:\d{2}:\d{2} · UTC\+8 \d{2}:\d{2}:\d{2}/.test((ew.document.getElementById('live-clock').textContent || '').trim()));
+
+  const audioBtn = ew.document.getElementById('hero-audio-btn');
+  const video = ew.document.querySelector('.hero-bg-video');
+  check('英文版音频按钮切换',
+    Boolean(audioBtn) && Boolean(video) &&
+    audioBtn.getAttribute('aria-pressed') === 'false' && video.muted === true);
+  audioBtn.click();
+  check('英文版音频按钮激活态',
+    audioBtn.getAttribute('aria-pressed') === 'true' && video.muted === false);
+  audioBtn.click();
+  check('英文版音频按钮恢复静音',
+    audioBtn.getAttribute('aria-pressed') === 'false' && video.muted === true);
+
+  checkMobileNav(ew, '英文版', '../index.html');
+
+  const copyBtns = Array.from(ew.document.querySelectorAll('button[data-copy]'));
+  check('英文版复制按钮挂载 · data-copy',
+    copyBtns.length >= 3 && copyBtns.every(btn => btn.getAttribute('data-copy')));
+
+  let copiedText = '';
+  ew.navigator.clipboard = {
+    writeText: (text) => {
+      copiedText = text;
+      return Promise.resolve();
+    }
+  };
+  const firstCopyBtn = copyBtns[0];
+  firstCopyBtn.click();
+  await new Promise((resolve) => setTimeout(resolve, 20));
+  const liveRegion = ew.document.getElementById('copy-live-region');
+  check('英文版复制成功调用 Clipboard API',
+    copiedText === firstCopyBtn.getAttribute('data-copy'));
+  check('英文版复制提供无障碍 aria-live 反馈',
+    Boolean(liveRegion) && liveRegion.getAttribute('aria-live') === 'polite' &&
+    liveRegion.textContent.includes('copied to clipboard'));
+
+  check('英文版运行时无异常', enApp.errors.length === 0, enApp.errors.join('; '));
+  ew.close();
+}
 
 /* ---------------------------------------------------------------- summary */
 console.log('\n============================================================');
