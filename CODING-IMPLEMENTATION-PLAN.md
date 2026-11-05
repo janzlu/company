@@ -193,7 +193,7 @@ window.NexusUI = {
      - 背景层：`<img class="hero-bg-img" src="./assets/hero-ai-infrastructure.jpg" ...>` + `<canvas class="hero-field" aria-hidden="true"></canvas>`。
      - 标题层（严格精简为 8 字主标）：
        ```html
-       <p class="eyebrow">EST. 2015 · 国家级科技型中小企业 · 10年实业软件沉淀</p>
+       <p class="eyebrow">EST. 2015 · 国家高新技术企业 · 10年实业软件沉淀</p>
        <h1 class="hero-title">
          <span class="line">让智能，</span>
          <span class="line">真正成为<em>生产力</em>。</span>

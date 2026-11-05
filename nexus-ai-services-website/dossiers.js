@@ -272,7 +272,7 @@
             ['国际科研合作平台', '<strong>中国—中东欧国家创新合作研究中心</strong>'],
             ['权威科研智库机构', '<strong>宁波海上丝绸之路研究院</strong>']
           ]) +
-          '<div class="dossier-callout"><span class="k">资质背书 // Credentials</span>国家级科技型中小企业 · 多项核心软著 · 浙ICP备15016619号-10</div>' +
+          '<div class="dossier-callout"><span class="k">资质背书 // Credentials</span>国家高新技术企业 · 多项核心软著 · 浙ICP备15016619号-10</div>' +
           actions([
             { dossier: 'srv-consult', label: '预约 1对1 定制诊断' },
             { dossier: 'srv-process', label: '查看五步交付法 // SRV-03' }
@@ -325,7 +325,7 @@
           '<button type="button" class="btn btn-line" data-consult-reset>返回继续修改或再次提交</button>' +
           '</div>' +
           '<div class="dossier-callout"><span class="k">响应承诺 // Response</span>林经理与首席AI架构师将在 2 小时内通过电话/微信与您取得联系；所有信息仅用于本次方案评估，严格保密。</div>' +
-          '<p class="dossier-note">宁波依然网络科技有限公司（智枢 AI）· 国家级科技型中小企业 · 浙ICP备15016619号-10</p>';
+          '<p class="dossier-note">宁波依然网络科技有限公司（智枢 AI）· 国家高新技术企业 · 浙ICP备15016619号-10</p>';
       }
     }
   };
